@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vértice Digital — Agência Digital | Sites, CRM WhatsApp e Tráfego Pago</title>
+  <meta name="description" content="Agência digital especializada em sites, landing pages, WordPress, CRM com bot para WhatsApp, banco de dados Supabase, social media e tráfego pago Meta e Google." />
+
+  <!-- Fontes do projeto (Space Grotesk = títulos e textos / JetBrains Mono = etiquetas técnicas) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="logo.svg">
+</head>
+<body>
+
+  <!-- ================ FUNDO INTERATIVO (SCI-FI) ================
+       Este <canvas> desenha a "rede neural" de partículas que
+       reage ao movimento do mouse (o código está no script.js,
+       seção 0). Ele fica ATRÁS de todo o conteúdo.
+       🖼️ Prefere uma IMAGEM de fundo no lugar? Abra o styles.css
+       e procure por "FUNDO COM IMAGEM" — lá tem um bloco pronto,
+       comentado, com sugestões de imagens sci-fi para usar. -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ======================================================
+       ⚙️ CONFIGURAÇÕES RÁPIDAS — EDITE AQUI PRIMEIRO
+       ------------------------------------------------------
+       1. TELEFONES: procure por "5521999990001" e "5521999990002"
+          neste arquivo e troque pelos números reais no formato
+          55 + DDD + número (sem espaços). Ex.: 5521987654321
+       2. INSTAGRAM: procure por "instagram.com/SEU_PERFIL_1" e
+          "instagram.com/SEU_PERFIL_2" e troque pelos perfis reais.
+       3. RESULTADOS DE TRÁFEGO: procure a seção "RESULTADOS".
+       ====================================================== -->
+
+  <!-- ===================== NAVEGAÇÃO ===================== -->
+  <header class="nav" id="topo">
+    <a class="nav-logo" href="#" aria-label="Vértice Digital — início">
+      <!-- Logo em SVG direto no HTML (mesmo desenho de assets/logo.svg) -->
+      <img src="logo-completo.svg" alt="logo-completo">
+      
+    </a>
+
+    <nav class="nav-links" aria-label="Menu principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Como trabalhamos</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+
+    <a class="btn btn-primary nav-cta" href="#contato">Fale conosco</a>
+
+    <!-- Botão hambúrguer (só aparece no celular) -->
+    <button class="nav-burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Menu de tela cheia do celular -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu do celular">
+    <a href="#servicos">Serviços</a>
+    <a href="#processo">Como trabalhamos</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#resultados">Resultados</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Fale conosco</a>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero container">
+    <span class="eyebrow">Agência digital · Estratégia + Código</span>
+    <h1>
+      Leve seu negócio ao ponto mais alto:
+      <!-- A frase dentro de .rotator troca sozinha com um fade suave.
+           Ela fica numa linha própria com ALTURA FIXA, então o resto
+           da página não se move quando o texto muda.
+           Para mudar as frases, edite a lista em script.js -->
+      <span class="rotator" id="rotator">mais clientes</span>
+    </h1>
+    <p>
+      Sites, landing pages, automação de WhatsApp e tráfego pago —
+      construídos por quem programa e mede resultado. Atendimento
+      direto, sem burocracia e sem enrolação.
+    </p>
+    <div class="hero-ctas">
+      <!-- 📞 TELEFONE 1 — troque 5521999990001 pelo número real -->
+      <a class="btn btn-primary" href="https://wa.me/5521968193801?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20com%20a%20V%C3%A9rtice." target="_blank" rel="noopener">
+        Pedir orçamento no WhatsApp <span class="btn-ico">↗</span>
+      </a>
+      <a class="btn btn-ghost" href="#servicos">Ver serviços <span class="btn-ico">↓</span></a>
+    </div>
+    <div class="hero-note">
+      <span class="dot" aria-hidden="true"></span>
+      RESPONDEMOS EM ATÉ 24H · ATENDIMENTO EM TODO O BRASIL
+    </div>
+  </section>
+
+  <!-- ===================== SERVIÇOS ===================== -->
+  <section class="section container" id="servicos">
+    <div class="section-head">
+      <span class="eyebrow">Serviços</span>
+      <h2>Tudo o que sua empresa precisa para <span class="grad-text">vender online</span></h2>
+      <p>Da página que converte ao anúncio que traz o cliente — cuidamos da ponta a ponta.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🚀</div>
+        <h3>Landing Pages de alta conversão</h3>
+        <p>Páginas rápidas e focadas em um único objetivo: transformar visitantes em contatos no seu WhatsApp.</p>
+        <span class="tag">HTML · CSS · JS</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🌐</div>
+        <h3>Sites em WordPress</h3>
+        <p>Sites institucionais completos e fáceis de atualizar, com Elementor — você mesmo edita textos e fotos depois.</p>
+        <span class="tag">WordPress · Elementor</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">⚙️</div>
+        <h3>Desenvolvimento Fullstack</h3>
+        <p>Sistemas sob medida: painéis, áreas de cliente, integrações e aplicações web completas para o seu processo.</p>
+        <span class="tag">Front + Back-end</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">💬</div>
+        <h3>CRM + Bot de WhatsApp</h3>
+        <p>Atendimento automático 24h, agendamentos e funil de vendas organizado — nenhum cliente fica sem resposta.</p>
+        <span class="tag">Automação · n8n · Meta-API</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🗄️</div>
+        <h3>Banco de dados Supabase</h3>
+        <p>Criação, organização e manutenção do banco de dados do seu site ou sistema, com segurança e backup.</p>
+        <span class="tag">Supabase · SQL</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">📱</div>
+        <h3>Social Media</h3>
+        <p>Planejamento e criação de conteúdo para o Instagram da sua empresa manter presença e autoridade.</p>
+        <span class="tag">Conteúdo · Design</span>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">📈</div>
+        <h3>Tráfego Pago — Meta &amp; Google</h3>
+        <p>Campanhas no Instagram, Facebook e Google para colocar sua empresa na frente de quem já está procurando.</p>
+        <span class="tag">Meta Ads · Google Ads</span>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESSO ===================== -->
+  <section class="section container" id="processo">
+    <div class="section-head">
+      <span class="eyebrow">Processo</span>
+      <h2>Como trabalhamos</h2>
+      <p>Um método simples, do diagnóstico ao acompanhamento.</p>
+    </div>
+    <div class="process">
+      <div class="step">
+        <span class="bin">[ 01 ]</span>
+        <h3>Diagnóstico</h3>
+        <p>Conversa rápida no WhatsApp para entender seu negócio, seu público e o que você quer alcançar.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 02 ]</span>
+        <h3>Proposta sob medida</h3>
+        <p>Você recebe um plano claro com escopo, prazo e investimento — sem surpresas no meio do caminho.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 03 ]</span>
+        <h3>Construção</h3>
+        <p>Desenvolvemos, mostramos prévias e ajustamos com você até ficar do jeito certo.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 04 ]</span>
+        <h3>Lançamento e acompanhamento</h3>
+        <p>Publicamos, medimos os resultados e cuidamos da manutenção para o projeto continuar rendendo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETOS / PORTFÓLIO ===================== -->
+  <section class="section container" id="projetos">
+    <div class="section-head">
+      <span class="eyebrow">Projetos</span>
+      <h2>Páginas que já saíram do papel</h2>
+      <p>Exemplos de landing pages criadas pela Vértice Digital. Clique para ver ao vivo.</p>
+    </div>
+
+    <div class="work-grid">
+      <!-- Projeto 1: landing page fictícia (arquivo dentro desta pasta) -->
+      <article class="card work-card">
+        <div class="thumb thumb-odonto"><small>Saúde · Odontologia</small>Clínica Sorriso Prime</div>
+        <div class="card-inner">
+          <span>Landing page para captação de avaliações</span>
+          <a class="work-link" href="clinica-sorriso-prime.html" target="_blank" rel="noopener">Ver página ↗</a>
+        </div>
+      </article>
+
+      <!-- Projeto 2: landing page fictícia (arquivo dentro desta pasta) -->
+      <article class="card work-card">
+        <div class="thumb thumb-barber"><small>Serviços · Barbearia</small>Navalha Club</div>
+        <div class="card-inner">
+          <span>Landing page com agendamento via WhatsApp</span>
+          <a class="work-link" href="navalha-club.html" target="_blank" rel="noopener">Ver página ↗</a>
+        </div>
+      </article>
+
+      <!-- Projeto 3: site real já publicado (link externo) -->
+      <article class="card work-card">
+        <div class="thumb thumb-monica"><small>Beleza · Profissional</small>Monica Carvalho</div>
+        <div class="card-inner">
+          <span>Site profissional publicado, com portfólio.</span>
+          <a class="work-link" href="https://vmvsaint.github.io/Monica-Carvalho-site/" target="_blank" rel="noopener">Ver página ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTADOS ===================== -->
+  <!-- ⚠️ ESPAÇO RESERVADO PARA VOCÊ PREENCHER DEPOIS ⚠️
+       Quando tiver os números reais das campanhas de tráfego:
+       1. Troque data-target pelo NÚMERO (só dígitos, sem "R$" ou "%").
+       2. Use data-prefix / data-suffix para símbolos (ex.: "R$ ", "%", "+", "x").
+       3. Troque o texto de .label pela descrição do resultado.
+       4. Troque .src pelo nome do cliente/período (ex.: "CLIENTE X · MAI/2026").
+       O script.js anima a contagem automaticamente quando a seção aparece.
+       Exemplos de métricas boas para mostrar: leads gerados, custo por lead,
+       faturamento gerado, ROAS (retorno sobre o investimento), alcance. -->
+  <section class="section container" id="resultados">
+    <div class="section-head">
+      <span class="eyebrow">Resultados</span>
+      <h2>Números que o tráfego pago já entregou</h2>
+      <p>Resultados reais de campanhas gerenciadas pela Vértice Digital.</p>
+    </div>
+
+    <div class="results-grid">
+      <article class="card result"><div class="card-inner">
+        <!-- EXEMPLO: <span class="num" data-target="347" data-prefix="+">0</span> -->
+        <span class="num" data-target="0" data-prefix="+">0</span>
+        <p class="label">Leads gerados <em>(preencher com o número real)</em></p>
+        <span class="src">CLIENTE · PERÍODO</span>
+      </div></article>
+
+      <article class="card result"><div class="card-inner">
+        <!-- EXEMPLO: <span class="num" data-target="4" data-prefix="R$ " data-suffix=",90">0</span> -->
+        <span class="num" data-target="0" data-prefix="R$ ">0</span>
+        <p class="label">Custo por lead <em>(preencher com o valor real)</em></p>
+        <span class="src">CLIENTE · PERÍODO</span>
+      </div></article>
+
+      <article class="card result"><div class="card-inner">
+        <!-- EXEMPLO: <span class="num" data-target="8" data-suffix="x">0</span> -->
+        <span class="num" data-target="0" data-suffix="x">0</span>
+        <p class="label">Retorno sobre o investimento (ROAS)</p>
+        <span class="src">CLIENTE · PERÍODO</span>
+      </div></article>
+
+      <article class="card result"><div class="card-inner">
+        <!-- EXEMPLO: <span class="num" data-target="52000" data-prefix="+">0</span> -->
+        <span class="num" data-target="0" data-prefix="+">0</span>
+        <p class="label">Pessoas alcançadas nos anúncios</p>
+        <span class="src">CLIENTE · PERÍODO</span>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <!-- Esta seção fala da AGÊNCIA, sem mencionar quantas pessoas
+       formam a equipe. Os contatos (2 WhatsApps e 2 Instagrans)
+       continuam disponíveis na seção Contato e no rodapé. -->
+  <section class="section container" id="sobre">
+    <div class="section-head">
+      <span class="eyebrow">Sobre</span>
+      <h2>Uma agência com um único objetivo: <span class="grad-text">fazer sua empresa crescer</span></h2>
+      <p>Na Vértice Digital você não fala com atendente — fala direto com especialistas que constroem e acompanham o seu projeto do início ao fim.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🎯</div>
+        <h3>Estratégia antes do código</h3>
+        <p>Todo projeto começa entendendo o seu negócio e o seu público. Site bonito que não vende não serve para nada.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🛠️</div>
+        <h3>Tecnologia própria</h3>
+        <p>Desenvolvemos com código, automação e banco de dados de verdade — nada de soluções genéricas que travam seu crescimento.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">📊</div>
+        <h3>Resultado medido</h3>
+        <p>Você acompanha números reais: visitas, leads, custo por contato. Relatórios simples, sem "tecniquês".</p>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section class="section container" id="contato">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <span class="eyebrow">Contato</span>
+        <h2>Vamos tirar seu projeto do papel?</h2>
+        <p>Preencha o formulário ou chame direto no WhatsApp. Respondemos em até 24h com os próximos passos.</p>
+
+        <div class="contact-list">
+          <!-- 📞 TELEFONE 1 — troque o número nos DOIS lugares (href e texto) -->
+          <a href="https://wa.me/5521968193801" target="_blank" rel="noopener">
+            <span class="ci">📞</span> (21) 96819-3801 · WhatsApp 1
+          </a>
+          <!-- 📞 TELEFONE 2 — troque o número nos DOIS lugares (href e texto) -->
+          <a href="https://wa.me/5521999144486" target="_blank" rel="noopener">
+            <span class="ci">📞</span> (21) 99914-4486 · WhatsApp 2
+          </a>
+          <!-- 📷 Instagrans da agência/equipe -->
+          <a href="https://instagram.com/sm.victory.91" target="_blank" rel="noopener">
+            <span class="ci">📷</span> @sm.victory.91
+          </a>
+          <a href="https://instagram.com/andradearte_" target="_blank" rel="noopener">
+            <span class="ci">📷</span> @andradearte_
+          </a>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO: hoje ele monta uma mensagem e abre o WhatsApp
+           (funciona sem servidor). No arquivo script.js há um bloco
+           comentado ensinando a salvar os contatos no Supabase também. -->
+      <form class="form card" id="leadForm" novalidate>
+        <div class="card-inner" style="display:grid; gap:1rem;">
+          <div class="field">
+            <label for="f-nome">Seu nome</label>
+            <input id="f-nome" name="nome" type="text" placeholder="Como podemos te chamar?" required />
+          </div>
+          <div class="field">
+            <label for="f-zap">Seu WhatsApp</label>
+            <input id="f-zap" name="whatsapp" type="tel" placeholder="(DDD) 90000-0000" required />
+          </div>
+          <div class="field">
+            <label for="f-servico">O que você precisa?</label>
+            <select id="f-servico" name="servico" required>
+              <option value="" disabled selected>Escolha um serviço</option>
+              <option>Landing Page</option>
+              <option>Site em WordPress</option>
+              <option>Sistema sob medida (Fullstack)</option>
+              <option>CRM + Bot de WhatsApp</option>
+              <option>Banco de dados (Supabase)</option>
+              <option>Social Media</option>
+              <option>Tráfego Pago (Meta / Google)</option>
+              <option>Combo — quero montar meu pacote de serviços</option>
+              <option>Ainda não sei — quero uma consultoria</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-msg">Conte um pouco do seu projeto</label>
+            <textarea id="f-msg" name="mensagem" placeholder="Ex.: tenho uma clínica e quero mais agendamentos..."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">
+            Enviar e falar no WhatsApp <span class="btn-ico">↗</span>
+          </button>
+          <p class="form-msg" id="formMsg" role="status"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <span>© 2026 Vértice Digital · Agência Digital · Todos os direitos reservados</span>
+      <div class="socials">
+        <a href="https://wa.me/5521968193801" target="_blank" rel="noopener">📞 (21) 96819-3801</a>
+        <a href="https://wa.me/5521999144486" target="_blank" rel="noopener">📞 (21) 99914-4486</a>
+        <a href="https://instagram.com/sm.victory.91" target="_blank" rel="noopener">📷 @sm.victory.91</a>
+        <a href="https://instagram.com/SEU_PERFIL_2" target="_blank" rel="noopener">📷 @andradearte_</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================ BOTÃO FLUTUANTE DO WHATSAPP ================
+       Mesmo estilo do site da Monica Carvalho: círculo verde com o
+       ícone OFICIAL do WhatsApp (SVG) e um anel pulsante.
+       📞 Usa o TELEFONE 1 — troque o número aqui também.
+       Para mudar o LADO do botão (esquerda/direita), veja o
+       comentário na classe .wa-float dentro do styles.css. -->
+  <a class="wa-float" href="https://wa.me/5521968193801?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20V%C3%A9rtice." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <span class="wa-pulse" aria-hidden="true"></span>
+    <!-- Ícone oficial do WhatsApp -->
+    <svg viewBox="0 0 32 32" width="30" height="30" fill="#FFFFFF" aria-hidden="true">
+      <path d="M16.04 4C9.55 4 4.28 9.27 4.28 15.76c0 2.08.54 4.1 1.58 5.89L4.2 27.8l6.33-1.62a11.7 11.7 0 0 0 5.51 1.39h.01c6.48 0 11.76-5.27 11.76-11.76 0-3.14-1.22-6.1-3.44-8.32A11.68 11.68 0 0 0 16.04 4zm0 21.58h-.01a9.77 9.77 0 0 1-4.98-1.36l-.36-.21-3.75.96 1-3.63-.24-.37a9.77 9.77 0 0 1-1.5-5.21c0-5.4 4.4-9.79 9.8-9.79 2.62 0 5.08 1.02 6.93 2.87a9.73 9.73 0 0 1 2.87 6.93c0 5.4-4.4 9.81-9.8 9.81zm5.38-7.34c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.64.07-.29-.15-1.24-.46-2.37-1.46-.87-.78-1.46-1.74-1.64-2.03-.17-.3-.02-.46.13-.6.14-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.19.05-.36-.03-.51-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.49-.66-.5l-.56-.01c-.2 0-.51.07-.78.36-.27.3-1.02 1-1.02 2.44s1.05 2.83 1.19 3.02c.15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.62.7.22 1.34.19 1.84.11.56-.08 1.75-.71 1.99-1.4.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.56-.35z"/>
+    </svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

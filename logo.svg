@@ -1,0 +1,20 @@
+<!--
+  LOGO DA VÉRTICE DIGITAL (símbolo)
+  Conceito: o "V" aponta para o vértice — o ponto de encontro entre
+  estratégia e tecnologia — e o ponto brilhante acima marca o topo,
+  onde queremos colocar cada cliente.
+  O degradê azul→violeta é a identidade da marca (mesmas cores do site).
+  Para trocar as cores, edite os stop-color do degradê abaixo.
+-->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-vtx" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <!-- O "V" -->
+  <path d="M14 20 L32 52 L50 20" stroke="url(#grad-vtx)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- O ponto no topo (o "vértice") -->
+  <circle cx="32" cy="12" r="5" fill="url(#grad-vtx)"/>
+</svg>

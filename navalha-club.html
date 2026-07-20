@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Navalha Club — Barbearia | Agende seu horário</title>
+<meta name="description" content="Corte, barba e experiência premium na Navalha Club. Agende pelo WhatsApp em 30 segundos." />
+
+<!--
+  LANDING PAGE FICTÍCIA #2 — BARBEARIA
+  =====================================
+  Por que barbearia? É um dos nichos locais mais fortes para landing
+  page + tráfego: serviço recorrente (o cliente volta todo mês),
+  decisão rápida e agendamento direto pelo WhatsApp. A página tem um
+  visual completamente diferente da clínica de propósito — assim o
+  portfólio mostra que a agência domina estilos distintos.
+
+  Arquivo AUTOCONTIDO (HTML + CSS + JS juntos). Para adaptar a um
+  cliente real: troque textos, preços, cores em :root e o WhatsApp.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --preto:  #0E0C09;   /* fundo principal */
+    --carvao: #17140F;   /* cards */
+    --ouro:   #D9A441;   /* dourado da marca */
+    --creme:  #F3EBDD;   /* texto claro */
+    --muted:  #A99F8C;   /* texto secundário */
+    --ease: cubic-bezier(.32,.72,0,1);
+  }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--preto); color:var(--creme);
+    font-family:"Archivo",sans-serif; line-height:1.65; font-size:1.03rem;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2{ font-family:"Bebas Neue",sans-serif; font-weight:400; letter-spacing:.03em; line-height:.98; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ width:min(100% - 2.5rem, 1000px); margin-inline:auto; }
+  section{ padding-block:5.5rem; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    background:var(--ouro); color:#241A08; font-weight:700;
+    padding:1rem 1.9rem; border-radius:999px; font-size:1rem;
+    box-shadow:0 14px 30px -12px rgba(217,164,65,.55);
+    transition:transform .5s var(--ease);
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn:active{ transform:scale(.98); }
+
+  header{ display:flex; justify-content:space-between; align-items:center; padding:1.3rem 0; }
+  .logo{ font-family:"Bebas Neue",sans-serif; font-size:1.5rem; letter-spacing:.12em; }
+  .logo span{ color:var(--ouro); }
+  header a.tel{ color:var(--ouro); font-weight:700; font-size:.9rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{ text-align:center; padding-block:4.5rem 5rem; position:relative; }
+  .hero::before{ /* brilho dourado suave atrás do título */
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(420px 260px at 50% 30%, rgba(217,164,65,.14), transparent 70%);
+  }
+  .fita{
+    display:inline-block; border:1px solid rgba(217,164,65,.4); color:var(--ouro);
+    font-size:.72rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase;
+    padding:.5rem 1.2rem; border-radius:999px; margin-bottom:1.4rem;
+  }
+  .hero h1{ font-size:clamp(3.2rem, 10vw, 6rem); }
+  .hero h1 span{ color:var(--ouro); }
+  .hero p{ color:var(--muted); max-width:480px; margin:1.2rem auto 0; }
+  .hero .btn{ margin-top:2rem; }
+
+  /* ---------- SERVIÇOS E PREÇOS ---------- */
+  h2.titulo{ font-size:clamp(2.2rem,5vw,3.2rem); }
+  h2.titulo span{ color:var(--ouro); }
+  .menu{ margin-top:2.4rem; display:grid; gap:.9rem; }
+  .item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+    background:var(--carvao); border:1px solid rgba(243,235,221,.08);
+    padding:1.2rem 1.5rem; border-radius:1rem;
+    transition:transform .5s var(--ease), border-color .5s var(--ease);
+  }
+  .item:hover{ transform:translateX(6px); border-color:rgba(217,164,65,.4); }
+  .item .nome{ font-weight:700; }
+  .item .desc{ display:block; color:var(--muted); font-size:.85rem; font-weight:400; margin-top:.2rem; }
+  .item .preco{ font-family:"Bebas Neue",sans-serif; font-size:1.5rem; color:var(--ouro); white-space:nowrap; }
+
+  /* ---------- DIFERENCIAIS ---------- */
+  .difs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:2.4rem; }
+  .dif{
+    border-top:2px solid var(--ouro); padding-top:1.1rem;
+  }
+  .dif h3{ font-size:1.05rem; font-weight:700; }
+  .dif p{ color:var(--muted); font-size:.9rem; margin-top:.4rem; }
+
+  /* ---------- GALERIA ---------- */
+  .galeria{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:.8rem; margin-top:2.4rem; }
+  .foto{
+    aspect-ratio:1/1.15; border-radius:1rem; display:grid; place-content:center;
+    color:var(--muted); font-size:.8rem; text-align:center; padding:1rem;
+    background:linear-gradient(150deg,#1D1810,#0F0D09);
+    border:1px dashed rgba(217,164,65,.3);
+  }
+
+  /* ---------- CHAMADA FINAL ---------- */
+  .cta{
+    text-align:center; background:var(--carvao);
+    border:1px solid rgba(217,164,65,.25); border-radius:1.6rem;
+    padding:4rem 1.5rem;
+  }
+  .cta h2{ font-size:clamp(2.4rem,6vw,3.6rem); }
+  .cta p{ color:var(--muted); margin-top:.8rem; }
+  .cta .btn{ margin-top:1.8rem; }
+  .horario{ margin-top:1.6rem; color:var(--muted); font-size:.85rem; }
+
+  footer{ text-align:center; padding:2.5rem 1rem; color:var(--muted); font-size:.85rem; }
+  footer strong{ color:var(--ouro); }
+
+  .rvl{ opacity:0; transform:translateY(28px); }
+  .rvl.on{ opacity:1; transform:none; transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  @media (prefers-reduced-motion: reduce){ .rvl{ opacity:1; transform:none; } }
+
+  @media (max-width:760px){
+    section{ padding-block:3.8rem; }
+    .item{ flex-direction:column; align-items:flex-start; gap:.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="logo">NAVALHA <span>CLUB</span></div>
+    <a class="tel" href="https://wa.me/5521900000000" target="_blank" rel="noopener">AGENDAR ➜</a>
+  </header>
+</div>
+
+<!-- HERO -->
+<section class="hero wrap">
+  <span class="fita rvl">✂ DESDE 2019 · ZONA SUL</span>
+  <h1 class="rvl">CORTE NA RÉGUA.<br /><span>BARBA NO CAPRICHO.</span></h1>
+  <p class="rvl">Sem fila e sem espera: agende seu horário pelo WhatsApp em 30 segundos e chegue na hora marcada.</p>
+  <a class="btn rvl" href="https://wa.me/5521900000000?text=Fala,%20Navalha%20Club!%20Quero%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener">Agendar pelo WhatsApp 💈</a>
+</section>
+
+<!-- SERVIÇOS E PREÇOS -->
+<section class="wrap">
+  <h2 class="titulo rvl">SERVIÇOS <span>&amp; VALORES</span></h2>
+  <div class="menu">
+    <div class="item rvl"><span class="nome">Corte degradê / social<span class="desc">Máquina + tesoura + finalização</span></span><span class="preco">R$ 45</span></div>
+    <div class="item rvl"><span class="nome">Barba completa<span class="desc">Toalha quente + navalha + hidratação</span></span><span class="preco">R$ 35</span></div>
+    <div class="item rvl"><span class="nome">Combo corte + barba<span class="desc">O favorito da casa</span></span><span class="preco">R$ 70</span></div>
+    <div class="item rvl"><span class="nome">Sobrancelha na navalha<span class="desc">Alinhamento rápido</span></span><span class="preco">R$ 15</span></div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="wrap">
+  <h2 class="titulo rvl">POR QUE A <span>NAVALHA?</span></h2>
+  <div class="difs">
+    <div class="dif rvl"><h3>Horário marcado de verdade</h3><p>Você chega, senta e corta. Seu tempo vale ouro.</p></div>
+    <div class="dif rvl"><h3>Café por conta da casa</h3><p>Enquanto o corte sai, você relaxa.</p></div>
+    <div class="dif rvl"><h3>Plano mensal do sócio</h3><p>Cortes ilimitados no mês por um valor fixo. Pergunte no WhatsApp.</p></div>
+  </div>
+</section>
+
+<!-- GALERIA COM IMAGENS INSERIDAS -->
+<section class="wrap">
+  <h2 class="titulo rvl">TRABALHOS <span>RECENTES</span></h2>
+  <div class="galeria">
+    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80" alt="Corte Degradê" class="foto rvl" style="padding:0; border:none; object-fit:cover; display:block; width:100%; height:100%;">
+    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=400&q=80" alt="Corte Social" class="foto rvl" style="padding:0; border:none; object-fit:cover; display:block; width:100%; height:100%;">
+    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=400&q=80" alt="Barba Feita" class="foto rvl" style="padding:0; border:none; object-fit:cover; display:block; width:100%; height:100%;">
+    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80" alt="Interior da Barbearia" class="foto rvl" style="padding:0; border:none; object-fit:cover; display:block; width:100%; height:100%;">
+  </div>
+</section>
+
+<!-- CHAMADA FINAL -->
+<section class="wrap">
+  <div class="cta rvl">
+    <h2>BORA MARCAR <br/>ESSE CORTE?</h2>
+    <p>Responde rápido: agenda aberta para esta semana.</p>
+    <a class="btn" href="https://wa.me/5521900000000?text=Fala,%20Navalha%20Club!%20Quero%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener">Chamar no WhatsApp agora ➜</a>
+    <p class="horario">Seg–Sáb · 9h às 20h · Rua Exemplo, 123 — Rio de Janeiro</p>
+  </div>
+</section>
+
+<footer>
+  Navalha Club (empresa fictícia para portfólio) · Landing page por <strong>Vértice Digital — Agência Digital</strong>
+</footer>
+
+<script>
+  /* Animação de entrada ao rolar */
+  const els = document.querySelectorAll('.rvl');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en, i) => {
+        if (en.isIntersecting) {
+          setTimeout(() => en.target.classList.add('on'), i * 70);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('on'));
+  }
+</script>
+</body>
+</html>

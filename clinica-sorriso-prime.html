@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clínica Sorriso Prime — Avaliação Odontológica</title>
+<meta name="description" content="Agende sua avaliação na Clínica Sorriso Prime. Implantes, clareamento e ortodontia com atendimento humanizado." />
+
+<!--
+  LANDING PAGE FICTÍCIA #1 — CLÍNICA ODONTOLÓGICA
+  ================================================
+  Por que odontologia? Clínicas (odonto, estética, fisioterapia) são
+  um dos nichos que MAIS contratam landing pages no Brasil: ticket
+  alto, agenda para preencher e concorrência local forte. Uma página
+  focada em "agendar avaliação" conversa direto com anúncios no
+  Google ("dentista perto de mim") e no Instagram.
+
+  Este arquivo é AUTOCONTIDO: HTML + CSS + JS num arquivo só, para
+  ser fácil de copiar e adaptar para um cliente real. Basta trocar
+  textos, cores (em :root) e o número do WhatsApp.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ---------- CORES E FONTES DA CLÍNICA ---------- */
+  :root{
+    --verde: #0F766E;        /* verde-petróleo: saúde + confiança */
+    --verde-escuro: #134E4A;
+    --menta: #e5eeea;        /* fundo claro */
+    --areia: #FFFFFF;
+    --ink: #1C2B2A;
+    --muted: #51655F;
+    --dourado: #D9A441;      /* detalhe premium */
+    --ease: cubic-bezier(.32,.72,0,1);
+  }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    font-family:"Manrope",sans-serif; color:var(--ink);
+    background:var(--menta); line-height:1.65; font-size:1.05rem;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Fraunces",serif; font-weight:600; letter-spacing:-.01em; line-height:1.15; text-wrap:balance; }
+  img{ max-width:100%; display:block; }
+  a{ text-decoration:none; color:inherit; }
+  .wrap{ width:min(100% - 2.5rem, 1040px); margin-inline:auto; }
+  section{ padding-block:5.5rem; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    background:var(--verde); color:#fff; font-weight:700;
+    padding:1rem 1.8rem; border-radius:999px; border:none; cursor:pointer;
+    font-size:1rem; box-shadow:0 12px 28px -10px rgba(15,118,110,.5);
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 18px 34px -10px rgba(15,118,110,.55); }
+  .btn:active{ transform:scale(.98); }
+
+  /* ---------- TOPO ---------- */
+  header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.2rem 0;
+  }
+  .logo{ font-family:"Fraunces",serif; font-size:1.3rem; font-weight:600; color:var(--verde-escuro); }
+  .logo span{ color:var(--dourado); }
+  header a.tel{ font-weight:700; color:var(--verde); font-size:.95rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding-block:3.5rem 5rem; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; align-items:center; }
+  .selo{
+    display:inline-block; background:#fff; color:var(--verde);
+    font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    padding:.45rem 1rem; border-radius:999px; border:1px solid #CBE8E0;
+    margin-bottom:1.2rem;
+  }
+  .hero h1{ font-size:clamp(2.1rem, 4.6vw, 3.3rem); color:var(--verde-escuro); }
+  .hero h1 em{ font-style:normal; color:var(--verde); }
+  .hero p{ color:var(--muted); margin-top:1.1rem; max-width:480px; }
+  .hero .btn{ margin-top:1.8rem; }
+  .garantias{ display:flex; gap:1.4rem; flex-wrap:wrap; margin-top:1.6rem; color:var(--muted); font-size:.88rem; font-weight:600; }
+  .garantias li{ list-style:none; display:flex; gap:.4rem; align-items:center; }
+
+  /* Foto ilustrativa */
+  .hero-foto{
+    border-radius:1.6rem; aspect-ratio:4/4.6;
+    background:
+      radial-gradient(300px 220px at 70% 20%, rgba(217,164,65,.35), transparent 60%),
+      linear-gradient(160deg, #14B8A6, #0F766E 60%, #134E4A);
+    display:grid; place-content:center; color:#ECFDF5; text-align:center;
+    font-size:4rem; box-shadow:0 30px 60px -25px rgba(19,78,74,.5);
+  }
+  .hero-foto small{ font-size:.8rem; font-family:"Manrope",sans-serif; opacity:.85; }
+
+  /* ---------- BENEFÍCIOS ---------- */
+  .beneficios{ background:var(--areia); border-radius:2rem; }
+  .beneficios h2{ font-size:clamp(1.7rem,3.4vw,2.3rem); color:var(--verde-escuro); max-width:520px; }
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.2rem; margin-top:2.5rem; }
+  .cardb{
+    background:var(--menta); border:1px solid #D7EFE7; border-radius:1.2rem;
+    padding:1.6rem; transition:transform .5s var(--ease);
+  }
+  .cardb:hover{ transform:translateY(-4px); }
+  .cardb .ico{ font-size:1.6rem; }
+  .cardb h3{ font-size:1.1rem; margin-top:.8rem; color:var(--verde-escuro); }
+  .cardb p{ color:var(--muted); font-size:.93rem; margin-top:.5rem; }
+
+  /* ---------- DEPOIMENTOS ---------- */
+  .depo-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; margin-top:2.5rem; }
+  .depo{
+    background:#fff; border-radius:1.2rem; padding:1.6rem;
+    border:1px solid #D7EFE7; font-size:.95rem; color:var(--muted);
+  }
+  .depo strong{ display:block; margin-top:1rem; color:var(--verde-escuro); }
+  .estrelas{ color:var(--dourado); letter-spacing:.15em; }
+
+  /* ---------- CHAMADA FINAL + FORM ---------- */
+  .cta-final{
+    background:linear-gradient(150deg, var(--verde) 0%, var(--verde-escuro) 100%);
+    border-radius:2rem; color:#ECFDF5; text-align:center;
+    padding:4rem 1.5rem;
+  }
+  .cta-final h2{ font-size:clamp(1.8rem,3.6vw,2.5rem); }
+  .cta-final p{ opacity:.9; margin-top:.8rem; }
+  form{
+    margin:2.2rem auto 0; max-width:420px; display:grid; gap:.8rem; text-align:left;
+  }
+  form input{
+    padding:1rem 1.2rem; border-radius:14px; border:none; font:inherit; font-size:.95rem;
+  }
+  form .btn{ justify-content:center; background:var(--dourado); color:#3A2A0A; box-shadow:0 12px 28px -10px rgba(217,164,65,.55); }
+  .form-status{ font-size:.85rem; min-height:1.2em; text-align:center; }
+
+  footer{ text-align:center; padding:2.5rem 1rem; color:var(--muted); font-size:.85rem; }
+
+  /* ---------- ANIMAÇÃO DE ENTRADA ---------- */
+  .rvl{ opacity:0; transform:translateY(28px); }
+  .rvl.on{ opacity:1; transform:none; transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  @media (prefers-reduced-motion: reduce){ .rvl{ opacity:1; transform:none; } }
+
+  /* ---------- CELULAR ---------- */
+  @media (max-width:820px){
+    section{ padding-block:3.8rem; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-foto{ aspect-ratio:16/10; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="logo">Sorriso <span>Prime</span></div>
+    <a class="tel" href="https://wa.me/5521900000000" target="_blank" rel="noopener">📞 (21) 90000-0000</a>
+  </header>
+</div>
+
+<!-- HERO -->
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div class="rvl">
+      <span class="selo">✦ Avaliação com condição especial este mês</span>
+      <h1>O sorriso que você adia há anos <em>começa em uma avaliação</em>.</h1>
+      <p>Implantes, clareamento e ortodontia com tecnologia digital e um atendimento que respeita o seu tempo — e o seu bolso, com parcelamento facilitado.</p>
+      <a class="btn" href="https://wa.me/5521900000000?text=Ol%C3%A1!%20Quero%20agendar%20minha%20avalia%C3%A7%C3%A3o%20na%20Sorriso%20Prime." target="_blank" rel="noopener">Agendar minha avaliação →</a>
+      <ul class="garantias">
+        <li>✔ Atendimento humanizado</li>
+        <li>✔ Parcelamento em até 12x</li>
+        <li>✔ Raio-X digital na hora</li>
+      </ul>
+    </div>
+    
+    <!-- IMAGEM INSERIDA AQUI -->
+    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80" alt="Equipe Clínica Odontológica" class="hero-foto rvl" style="padding:0; object-fit:cover; display:block; width:100%; height:100%;">
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section class="wrap">
+  <div class="beneficios" style="padding:3.5rem 2rem;">
+    <h2 class="rvl">Por que mais de 2.000 pacientes escolheram a Sorriso Prime</h2>
+    <div class="cards">
+      <div class="cardb rvl"><span class="ico">🦷</span><h3>Implantes com planejamento 3D</h3><p>Cirurgia guiada por computador: mais precisão, menos desconforto e recuperação mais rápida.</p></div>
+      <div class="cardb rvl"><span class="ico">✨</span><h3>Clareamento profissional</h3><p>Resultado visível já na primeira sessão, com acompanhamento para proteger o esmalte.</p></div>
+      <div class="cardb rvl"><span class="ico">🪥</span><h3>Ortodontia e alinhadores</h3><p>Do aparelho tradicional aos alinhadores invisíveis, com plano de tratamento transparente.</p></div>
+      <div class="cardb rvl"><span class="ico">💳</span><h3>Cabe no seu orçamento</h3><p>Avaliação com condição especial e parcelamento em até 12x no cartão.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA SOCIAL -->
+<section class="wrap">
+  <h2 class="rvl" style="color:var(--verde-escuro); font-size:clamp(1.7rem,3.4vw,2.3rem);">Quem já sorriu com a gente</h2>
+  <div class="depo-grid">
+    <div class="depo rvl"><span class="estrelas">★★★★★</span><p>"Tinha pavor de dentista. A equipe me acolheu do início ao fim e hoje sorrio sem vergonha nas fotos."</p><strong>Mariana L. — Implante</strong></div>
+    <div class="depo rvl"><span class="estrelas">★★★★★</span><p>"Fiz o clareamento antes do meu casamento. Resultado incrível e super rápido!"</p><strong>Carlos E. — Clareamento</strong></div>
+    <div class="depo rvl"><span class="estrelas">★★★★★</span><p>"Preço justo, tudo explicado com clareza e sem empurrar tratamento. Recomendo demais."</p><strong>Fernanda S. — Ortodontia</strong></div>
+  </div>
+</section>
+
+<!-- CHAMADA FINAL -->
+<section class="wrap">
+  <div class="cta-final rvl">
+    <h2>Agende sua avaliação agora</h2>
+    <p>Deixe seu contato e nossa equipe chama você no WhatsApp em minutos.</p>
+    <form id="formClinica" novalidate>
+      <input type="text" id="c-nome" placeholder="Seu nome" required />
+      <input type="tel" id="c-zap" placeholder="Seu WhatsApp — (DDD) 90000-0000" required />
+      <button class="btn" type="submit">Quero agendar 🗓️</button>
+      <p class="form-status" id="cStatus"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  Clínica Sorriso Prime (empresa fictícia para portfólio) · Landing page por <strong>Vértice Digital — Agência Digital</strong>
+</footer>
+
+<script>
+  /* Formulário → abre o WhatsApp da clínica com os dados preenchidos */
+  document.getElementById('formClinica').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const nome = document.getElementById('c-nome').value.trim();
+    const zap  = document.getElementById('c-zap').value.trim();
+    const status = document.getElementById('cStatus');
+    if (!nome || !zap) { status.textContent = 'Preencha nome e WhatsApp 🙂'; return; }
+    status.textContent = 'Abrindo o WhatsApp... ✅';
+    const texto = `Olá! Quero agendar uma avaliação.%0A*Nome:* ${encodeURIComponent(nome)}%0A*WhatsApp:* ${encodeURIComponent(zap)}`;
+    window.open(`https://wa.me/5521900000000?text=${texto}`, '_blank');
+    this.reset();
+  });
+
+  /* Animação de entrada ao rolar */
+  const els = document.querySelectorAll('.rvl');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en, i) => {
+        if (en.isIntersecting) {
+          setTimeout(() => en.target.classList.add('on'), i * 80);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('on'));
+  }
+</script>
+</body>
+</html>

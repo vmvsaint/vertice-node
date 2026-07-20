@@ -1,0 +1,461 @@
+/* =========================================================
+   BINÁRIA — styles.css
+   ---------------------------------------------------------
+   GUIA RÁPIDO PARA VOCÊ (iniciante):
+   1. As cores da marca ficam todas em :root (variáveis CSS).
+      Trocou lá, troca no site inteiro E combina com o logo.
+   2. Cada seção do site tem um bloco comentado com o nome dela.
+   3. No final do arquivo estão as regras de RESPONSIVIDADE
+      (@media) — é lá que o layout se adapta ao celular.
+   ========================================================= */
+
+/* ---------- 1. TOKENS DA MARCA (cores, fontes, medidas) ---------- */
+:root{
+  /* Cores — as mesmas do logo (assets/logo.svg) */
+  --bg:        #06080F;   /* fundo geral (quase preto azulado) */
+  --surface:   #0C111D;   /* fundo dos cards */
+  --surface-2: #101726;   /* fundo interno (camada de cima) */
+  --ink:       #E8ECF4;   /* texto principal */
+  --muted:     #9AA6BB;   /* texto secundário */
+  --bit-0:     #38BDF8;   /* azul elétrico  (o "0") */
+  --bit-1:     #A78BFA;   /* violeta        (o "1") */
+  --grad:      linear-gradient(120deg, var(--bit-0), var(--bit-1));
+  --line:      rgba(232,236,244,.09);  /* linhas finas/bordas */
+
+  /* Tipografia */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  /* Movimento (curva "física", nada de linear) */
+  --ease: cubic-bezier(.32,.72,0,1);
+
+  /* Medidas */
+  --radius: 1.25rem;
+  --container: 1120px;
+}
+
+/* ---------- 2. RESET E BASE ---------- */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-size:1.0625rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{ display:block; max-width:100%; height: 46px; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+button{ font:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+
+/* Brilhos suaves ao fundo (dois "orbes" nas cores da marca) */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(600px 400px at 85% -5%,  rgba(167,139,250,.14), transparent 70%),
+    radial-gradient(700px 500px at -10% 30%, rgba(56,189,248,.10),  transparent 70%);
+}
+
+/* ---------- FUNDO INTERATIVO (canvas de partículas) ----------
+   O desenho em si é feito pelo JavaScript (script.js, seção 0).
+   Aqui só posicionamos o canvas atrás de tudo. */
+#bg-canvas{
+  position:fixed; inset:0; z-index:-1;
+  width:100%; height:100%;
+  pointer-events:none;   /* o mouse "atravessa" o canvas */
+}
+
+/* ---------- FUNDO COM IMAGEM (alternativa pronta) ----------
+   Quer usar uma FOTO/ARTE no lugar (ou junto) das partículas?
+   1. Baixe uma imagem e salve em assets/fundo.jpg
+   2. Descomente o bloco abaixo (remova este par de barras e
+      asteriscos) — a camada escura por cima (linear-gradient)
+      garante que o texto continue legível.
+   3. Se quiser SÓ a imagem, sem partículas, apague ou comente
+      a seção 0 do script.js.
+
+   💡 SUGESTÕES DE IMAGENS SCI-FI (busque grátis em unsplash.com
+      ou pexels.com com estes termos em inglês):
+      · "circuit board macro"   → placa de circuito (combina com
+        a ideia de código/fullstack — a minha favorita p/ vocês)
+      · "digital network abstract" → malha de dados azul/roxa
+      · "futuristic grid neon"  → grade estilo Tron
+      · "nebula purple blue"    → nebulosa nas cores da marca
+      · "server room lights"    → datacenter desfocado
+
+body{
+  background:
+    linear-gradient(rgba(6,8,15,.88), rgba(6,8,15,.94)),
+    url("assets/fundo.jpg") center / cover no-repeat fixed;
+}
+------------------------------------------------------------- */
+
+.container{ width:min(100% - 2.5rem, var(--container)); margin-inline:auto; }
+
+/* "Eyebrow" = etiqueta pequena acima dos títulos */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono); font-size:.65rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--bit-0);
+  border:1px solid var(--line); border-radius:999px; padding:.4rem .9rem;
+  background:rgba(56,189,248,.06);
+}
+.eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--grad); }
+
+.section{ padding-block:7rem; }
+.section-head{ max-width:640px; margin-bottom:3.5rem; }
+.section-head h2{
+  font-size:clamp(1.9rem, 4vw, 2.75rem);
+  font-weight:600; letter-spacing:-.02em; line-height:1.15;
+  margin-top:1rem; text-wrap:balance;
+}
+.section-head p{ color:var(--muted); margin-top:.9rem; }
+
+/* Texto com degradê da marca */
+.grad-text{
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+/* ---------- 3. BOTÕES ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:.7rem;
+  padding:.85rem 1.5rem; border-radius:999px;
+  font-weight:600; font-size:.95rem;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease), background .5s var(--ease);
+}
+.btn:active{ transform:scale(.97); }
+.btn-primary{
+  background:var(--grad); color:#04060C;
+  box-shadow:0 8px 30px -10px rgba(56,189,248,.5);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 38px -10px rgba(167,139,250,.55); }
+.btn-ghost{
+  border:1px solid var(--line); color:var(--ink); background:rgba(255,255,255,.02);
+}
+.btn-ghost:hover{ background:rgba(255,255,255,.06); transform:translateY(-2px); }
+/* Setinha do botão dentro do próprio círculo */
+.btn .btn-ico{
+  width:1.7rem; height:1.7rem; border-radius:50%;
+  display:grid; place-items:center;
+  background:rgba(4,6,12,.18); font-size:.8rem;
+  transition:transform .5s var(--ease);
+}
+.btn-ghost .btn-ico{ background:rgba(255,255,255,.08); }
+.btn:hover .btn-ico{ transform:translate(2px,-2px); }
+
+/* ---------- 4. NAVEGAÇÃO (pílula flutuante) ---------- */
+.nav{
+  position:fixed; top:1.1rem; left:50%; translate:-50% 0; z-index:60;
+  width:min(100% - 2rem, var(--container));
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.6rem .9rem .6rem 1.1rem;
+  border:1px solid var(--line); border-radius:999px;
+  background:rgba(8,11,20,.6);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+}
+.nav-logo{ display:flex; align-items:center; gap:.6rem; font-weight:600; font-size:1.1rem; letter-spacing:-.02em; }
+.nav-logo svg{ width:30px; height:30px; }
+.nav-links{ display:flex; gap:1.8rem; font-size:.9rem; color:var(--muted); }
+.nav-links a{ transition:color .4s var(--ease); }
+.nav-links a:hover{ color:var(--ink); }
+.nav-cta{ display:inline-flex; }
+/* Hambúrguer (só aparece no celular — ver @media no fim) */
+.nav-burger{ display:none; width:42px; height:42px; position:relative; z-index:70; }
+.nav-burger span{
+  position:absolute; left:10px; width:22px; height:2px; border-radius:2px;
+  background:var(--ink); transition:transform .5s var(--ease), top .5s var(--ease), opacity .3s;
+}
+.nav-burger span:nth-child(1){ top:15px; }
+.nav-burger span:nth-child(2){ top:21px; }
+.nav-burger span:nth-child(3){ top:27px; }
+/* Quando o menu está aberto o hambúrguer vira um X */
+.menu-open .nav-burger span:nth-child(1){ top:21px; transform:rotate(45deg); }
+.menu-open .nav-burger span:nth-child(2){ opacity:0; }
+.menu-open .nav-burger span:nth-child(3){ top:21px; transform:rotate(-45deg); }
+
+/* Menu de tela cheia (celular) */
+.mobile-menu{
+  position:fixed; inset:0; z-index:55;
+  display:grid; place-content:center; gap:1.4rem; text-align:center;
+  background:rgba(6,8,15,.9);
+  backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px);
+  opacity:0; pointer-events:none; transition:opacity .5s var(--ease);
+}
+.menu-open .mobile-menu{ opacity:1; pointer-events:auto; }
+.mobile-menu a{
+  font-size:1.6rem; font-weight:600; letter-spacing:-.02em;
+  opacity:0; translate:0 24px;
+  transition:opacity .6s var(--ease), translate .6s var(--ease);
+}
+.menu-open .mobile-menu a{ opacity:1; translate:0 0; }
+/* Entrada em cascata dos links */
+.menu-open .mobile-menu a:nth-child(1){ transition-delay:.08s }
+.menu-open .mobile-menu a:nth-child(2){ transition-delay:.14s }
+.menu-open .mobile-menu a:nth-child(3){ transition-delay:.20s }
+.menu-open .mobile-menu a:nth-child(4){ transition-delay:.26s }
+.menu-open .mobile-menu a:nth-child(5){ transition-delay:.32s }
+.menu-open .mobile-menu a:nth-child(6){ transition-delay:.38s }
+
+/* ---------- 5. HERO ---------- */
+.hero{
+  min-height:100dvh;
+  display:grid; align-content:center;
+  padding-top:7rem; padding-bottom:4rem;
+  position:relative;
+}
+.hero h1{
+  font-size:clamp(2.4rem, 6vw, 4.4rem);
+  font-weight:600; letter-spacing:-.03em; line-height:1.06;
+  max-width:820px; margin-top:1.4rem; text-wrap:balance;
+}
+/* Frase que troca sozinha (rotator — ver script.js)
+   IMPORTANTE: ela é display:block com ALTURA FIXA (min-height),
+   então trocar o texto NÃO move o resto da página. A troca é um
+   fade com leve deslize, controlado pelas classes .rot-out/.rot-in. */
+.rotator{
+  display:block;
+  min-height:1.15em;               /* reserva a linha inteira */
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  opacity:1; translate:0 0;
+  transition:opacity .4s var(--ease), translate .4s var(--ease);
+}
+.rotator.rot-out{ opacity:0; translate:0 -10px; }  /* saindo (sobe e some) */
+.rotator.rot-in{  opacity:0; translate:0 10px; transition:none; } /* posiciona embaixo, sem animar */
+.hero p{ color:var(--muted); max-width:560px; margin-top:1.4rem; font-size:1.1rem; }
+.hero-ctas{ display:flex; flex-wrap:wrap; gap:1rem; margin-top:2.4rem; }
+.hero-note{
+  margin-top:2.6rem; display:flex; align-items:center; gap:.8rem;
+  font-family:var(--font-mono); font-size:.75rem; color:var(--muted);
+}
+.hero-note .dot{ width:8px; height:8px; border-radius:50%; background:#34D399; box-shadow:0 0 12px #34D399; }
+
+/* ---------- 6. SERVIÇOS ---------- */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+  gap:1.1rem;
+}
+/* Card com "moldura dupla": casca externa + miolo interno */
+.card{
+  border:1px solid var(--line); border-radius:var(--radius);
+  background:rgba(255,255,255,.02);
+  padding:.45rem;
+  transition:transform .6s var(--ease), border-color .6s var(--ease);
+}
+.card-inner{
+  background:var(--surface); border-radius:calc(var(--radius) - .45rem);
+  padding:1.7rem; height:100%;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+.card:hover{ transform:translateY(-5px); border-color:rgba(56,189,248,.35); }
+.card-ico{
+  width:44px; height:44px; border-radius:12px;
+  display:grid; place-items:center; font-size:1.25rem;
+  background:linear-gradient(120deg, rgba(56,189,248,.15), rgba(167,139,250,.15));
+  border:1px solid var(--line);
+  margin-bottom:1.1rem;
+}
+.card h3{ font-size:1.15rem; font-weight:600; letter-spacing:-.01em; }
+.card p{ color:var(--muted); font-size:.95rem; margin-top:.6rem; }
+.card .tag{
+  display:inline-block; margin-top:1rem;
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--bit-0);
+}
+
+/* ---------- 7. PROCESSO (numerado em binário 00→11) ---------- */
+.process{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:1.1rem; }
+.step{ border-top:1px solid var(--line); padding-top:1.4rem; }
+.step .bin{
+  font-family:var(--font-mono); font-size:.8rem; letter-spacing:.2em;
+  color:var(--bit-1);
+}
+.step h3{ margin-top:.8rem; font-size:1.1rem; font-weight:600; }
+.step p{ color:var(--muted); font-size:.92rem; margin-top:.5rem; }
+
+/* ---------- 8. PORTFÓLIO ---------- */
+.work-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:1.1rem;
+  align-items:start;   /* cada card tem a altura do próprio conteúdo (sem esticar) */
+}
+/* O card de portfólio é uma COLUNA: capa em cima + rodapé embaixo.
+   overflow:hidden garante que nada interno "vaze" da caixa externa. */
+.work-card{ display:flex; flex-direction:column; overflow:hidden; }
+.work-card .thumb{
+  height:150px;   /* capa mais enxuta (antes 190px sobrava espaço) */
+  border-radius:calc(var(--radius) - .45rem) calc(var(--radius) - .45rem) 0 0;
+  display:grid; place-content:center; text-align:center; gap:.4rem;
+  font-weight:600; letter-spacing:-.01em;
+  border-bottom:1px solid var(--line);
+}
+.work-card .thumb small{ font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; opacity:.75; text-transform:uppercase; }
+/* Cada projeto tem sua "capa" de cor própria */
+.thumb-odonto{ background:linear-gradient(135deg,#0E3B43,#12545c); color:#B8F3EC; }
+.thumb-barber{ background:linear-gradient(135deg,#241A0E,#3A2A12); color:#EBC97B; }
+.thumb-monica{ background:linear-gradient(135deg,#2A1230,#43214d); color:#F1C8F5; }
+.work-card .card-inner{
+  height:auto;   /* ⚠️ A CORREÇÃO DO BUG: anula o height:100% herdado do
+                    .card-inner genérico. Com a capa em cima, 100% fazia a
+                    caixa interna ficar MAIOR que a externa ("saindo" dela)
+                    e empurrava o link para fora do card no celular. */
+  border-radius:0 0 calc(var(--radius) - .45rem) calc(var(--radius) - .45rem);
+  display:flex; flex-wrap:wrap;              /* permite quebrar linha em telas estreitas */
+  align-items:center; justify-content:space-between;
+  gap:.6rem 1rem; padding:1.1rem 1.3rem;
+}
+.work-card .card-inner span{ color:var(--muted); font-size:.85rem; flex:1 1 12rem; min-width:0; }
+.work-link{ color:var(--bit-0); font-size:.9rem; font-weight:600; white-space:nowrap; }
+.work-link:hover{ text-decoration:underline; }
+
+/* ---------- 9. RESULTADOS (espaços para preencher depois) ---------- */
+.results-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:1.1rem; }
+.result .num{
+  font-size:clamp(2.2rem, 4vw, 3rem); font-weight:600; letter-spacing:-.03em;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.result .label{ color:var(--muted); font-size:.9rem; margin-top:.4rem; }
+.result .src{ font-family:var(--font-mono); font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); opacity:.7; margin-top:1rem; display:block; }
+
+/* ---------- 10. SOBRE ---------- */
+/* A seção Sobre reaproveita o grid e os cards de .services-grid,
+   então não precisa de estilos próprios. */
+
+/* ---------- 11. CONTATO ---------- */
+.contact-wrap{
+  display:grid; grid-template-columns:1fr 1.1fr; gap:3rem; align-items:start;
+}
+.contact-info h2{ font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:600; letter-spacing:-.02em; margin-top:1rem; }
+.contact-info p{ color:var(--muted); margin-top:1rem; max-width:420px; }
+.contact-list{ margin-top:2rem; display:grid; gap:1rem; }
+.contact-list a{
+  display:flex; align-items:center; gap:.8rem; font-weight:600;
+  transition:color .4s var(--ease);
+}
+.contact-list a:hover{ color:var(--bit-0); }
+.contact-list .ci{
+  width:38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  border:1px solid var(--line); background:var(--surface); font-size:1rem;
+}
+
+/* Formulário */
+.form{ display:grid; gap:1rem; }
+.field label{
+  display:block; font-family:var(--font-mono); font-size:.65rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+  margin-bottom:.5rem;
+}
+.field input, .field select, .field textarea{
+  width:100%; padding:.95rem 1.1rem;
+  background:var(--surface-2); color:var(--ink);
+  border:1px solid var(--line); border-radius:14px;
+  font:inherit; font-size:.95rem;
+  transition:border-color .4s var(--ease), box-shadow .4s var(--ease);
+}
+.field textarea{ resize:vertical; min-height:110px; }
+.field :is(input,select,textarea):focus{
+  outline:none; border-color:var(--bit-0);
+  box-shadow:0 0 0 3px rgba(56,189,248,.15);
+}
+.form-msg{ font-size:.88rem; color:#34D399; min-height:1.2em; }
+
+/* ---------- 12. RODAPÉ ---------- */
+.footer{
+  border-top:1px solid var(--line);
+  padding-block:3rem; margin-top:4rem;
+  color:var(--muted); font-size:.88rem;
+  background-color: #0a06014f;
+}
+.footer-grid{ display:flex; flex-wrap:wrap; gap:2rem; justify-content:space-between; align-items:center; }
+.footer .socials{ display:flex; gap:1.4rem; }
+.footer a:hover{ color:var(--ink); }
+
+/* Botão flutuante do WhatsApp (estilo do site da Monica Carvalho:
+   círculo verde oficial + ícone SVG branco + anel pulsante).
+   💡 Para trocar o LADO do botão: troque "right:1.2rem" por
+   "left:1.2rem" aqui embaixo. */
+.wa-float{
+  position:fixed; right:1.2rem; bottom:1.2rem; z-index:50;
+  width:60px; height:60px; border-radius:50%;
+  display:grid; place-items:center;
+  background:#25D366;
+  box-shadow:0 10px 30px -8px rgba(37,211,102,.6);
+  transition:transform .5s var(--ease);
+}
+.wa-float:hover{ transform:scale(1.08) translateY(-2px); }
+/* Anel que pulsa atrás do botão para chamar atenção */
+.wa-pulse{
+  position:absolute; inset:0; border-radius:50%;
+  background:rgba(37,211,102,.45);
+  animation:wa-pulse 2s var(--ease) infinite;
+  pointer-events:none;
+}
+@keyframes wa-pulse{
+  0%   { transform:scale(1);   opacity:.7; }
+  70%  { transform:scale(1.6); opacity:0;  }
+  100% { transform:scale(1.6); opacity:0;  }
+}
+@media (prefers-reduced-motion: reduce){
+  .wa-pulse{ animation:none; opacity:0; }
+}
+
+/* ---------- 13. ANIMAÇÃO DE ENTRADA (scroll reveal) ---------- */
+/* Os elementos começam visíveis; o JS adiciona .will-reveal
+   e depois .revealed quando entram na tela. Assim, se o JS
+   falhar, nada some da página. */
+.will-reveal{ opacity:0; translate:0 34px; filter:blur(6px); }
+.revealed{
+  opacity:1; translate:0 0; filter:blur(0);
+  transition:opacity .9s var(--ease), translate .9s var(--ease), filter .9s var(--ease);
+}
+
+/* ---------- 14. ACESSIBILIDADE / MOVIMENTO REDUZIDO ---------- */
+:focus-visible{ outline:2px solid var(--bit-0); outline-offset:3px; border-radius:6px; }
+@media (prefers-reduced-motion: reduce){
+  *{ transition-duration:.01ms !important; animation-duration:.01ms !important; }
+  html{ scroll-behavior:auto; }
+  .will-reveal{ opacity:1; translate:none; filter:none; }
+}
+
+/* ---------- 15. RESPONSIVIDADE ---------- */
+@media (max-width: 860px){
+  .section{ padding-block:4.5rem; }
+  .nav-links, .nav-cta{ display:none; }   /* esconde menu de desktop */
+  .nav-burger{ display:block; }           /* mostra hambúrguer */
+  .contact-wrap{ grid-template-columns:1fr; gap:2.2rem; }
+  .hero{ padding-top:6rem; }
+ 
+  /* PORTFÓLIO: no celular, texto em cima e link embaixo (empilhados),
+     em vez de disputarem a mesma linha */
+  .work-card .card-inner{
+    flex-direction:column; align-items:flex-start; gap:.45rem;
+  }
+  .work-card .card-inner span{ flex:none; }
+  .work-link{
+    white-space:normal;                  /* pode quebrar linha se precisar */
+    padding:.35rem 0;                    /* área de toque maior no dedo */
+  }
+ 
+  /* RODAPÉ: empilhado e organizado, com respiro extra embaixo para
+     o botão flutuante do WhatsApp não cobrir os links */
+  .footer{ padding-bottom:7rem; }
+  .footer-grid{ flex-direction:column; align-items:flex-start; gap:1.4rem; }
+  .footer .socials{
+    display:grid; grid-template-columns:1fr 1fr;  /* 2 colunas limpas */
+    gap:.8rem 1.6rem; width:100%;
+  }
+  .footer .socials a{ padding:.2rem 0; }  /* área de toque maior */
+}
+@media (max-width: 480px){
+  body{ font-size:1rem; }
+  .hero-ctas .btn{ width:100%; justify-content:center; }
+  .wa-float{ width:54px; height:54px; right:1rem; bottom:1rem; }
+  .wa-float svg{ width:26px; height:26px; }
+}
