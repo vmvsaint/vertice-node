@@ -1,0 +1,12 @@
+<svg width="420" height="72" viewBox="0 0 420 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-vtx2" x1="8" y1="8" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <path d="M16 24 L34 56 L52 24" stroke="url(#grad-vtx2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="34" cy="15" r="5" fill="url(#grad-vtx2)"/>
+  <text x="68" y="50" font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="34" font-weight="600" letter-spacing="-0.5" fill="#E8ECF4">v<tspan fill="url(#grad-vtx2)">é</tspan>rtice<tspan font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="22" font-weight="500" letter-spacing="-0.3" fill="url(#grad-vtx2)" dx="8" dy="0">node</tspan></text>
+  <text x="69" y="64" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="3.5" fill="#8A94A8">AGÊNCIA DIGITAL</text>
+</svg>
