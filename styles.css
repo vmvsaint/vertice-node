@@ -324,6 +324,92 @@ body{
 .result .label{ color:var(--muted); font-size:.9rem; margin-top:.4rem; }
 .result .src{ font-family:var(--font-mono); font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); opacity:.7; margin-top:1rem; display:block; }
 
+/* ---------- 9b. DEPOIMENTOS (carrossel + lightbox) ---------- */
+.depo-wrap{ position:relative; }
+/* Trilho horizontal com "encaixe" (scroll-snap): desliza suave e
+   para sempre alinhado no card. No celular, arrasta com o dedo. */
+.depo-slider{
+  display:flex; gap:1rem;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  padding:.3rem .3rem 1rem;
+  scrollbar-width:thin;                       /* barra fininha (Firefox) */
+  scrollbar-color:var(--surface-2) transparent;
+  -webkit-overflow-scrolling:touch;           /* inércia no iOS */
+}
+.depo-slider::-webkit-scrollbar{ height:6px; }
+.depo-slider::-webkit-scrollbar-thumb{ background:var(--surface-2); border-radius:999px; }
+ 
+.depo-slide{
+  flex:0 0 250px;                 /* largura fixa do card; o resto rola */
+  scroll-snap-align:start;
+  aspect-ratio:4/5;               /* formato vertical, típico de print */
+  border:1px solid var(--line); border-radius:var(--radius);
+  background:var(--surface);
+  overflow:hidden;
+  transition:transform .5s var(--ease), border-color .5s var(--ease);
+}
+.depo-slide:hover{ transform:translateY(-4px); border-color:rgba(56,189,248,.35); }
+.depo-slide img{
+  width:100%; height:100%;
+  object-fit:cover;               /* preenche o card sem distorcer */
+  object-position:top;            /* prints: o começo do texto importa mais */
+  cursor:zoom-in;
+  display:block;
+}
+/* Placeholder (antes de você colocar as imagens) */
+.depo-vazio{
+  display:grid; place-content:center; text-align:center;
+  border-style:dashed; color:var(--muted);
+  font-size:.85rem; line-height:1.5; cursor:default;
+}
+.depo-dica{
+  text-align:center; margin-top:.6rem;
+  font-family:var(--font-mono); font-size:.65rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--muted);
+}
+ 
+/* Setas de navegação (desktop) */
+.depo-seta{
+  position:absolute; top:50%; translate:0 -60%;
+  z-index:5;
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center; font-size:1.1rem;
+  background:rgba(12,17,29,.85); color:var(--ink);
+  border:1px solid var(--line);
+  backdrop-filter:blur(8px);
+  transition:transform .4s var(--ease), border-color .4s var(--ease);
+}
+.depo-seta:hover{ transform:scale(1.1); border-color:var(--bit-0); }
+.depo-ant{ left:-.6rem; }
+.depo-prox{ right:-.6rem; }
+ 
+/* Lightbox (depoimento ampliado em tela cheia) */
+.lightbox{
+  position:fixed; inset:0; z-index:80;
+  display:grid; place-items:center; padding:1.5rem;
+  background:rgba(4,6,12,.9);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  opacity:0; pointer-events:none;
+  transition:opacity .4s var(--ease);
+}
+.lightbox.aberto{ opacity:1; pointer-events:auto; }
+.lightbox img{
+  width:min(92vw, 640px); height:auto; max-height:85vh;
+  border-radius:16px; border:1px solid var(--line);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.8);
+  object-fit:contain;
+}
+.lightbox-fechar{
+  position:absolute; top:1.2rem; right:1.2rem;
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center; font-size:1.1rem;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line);
+}
+.lightbox-fechar:hover{ border-color:var(--bit-0); }
+
 /* ---------- 10. SOBRE ---------- */
 /* A seção Sobre reaproveita o grid e os cards de .services-grid,
    então não precisa de estilos próprios. */
@@ -431,6 +517,11 @@ body{
   .nav-burger{ display:block; }           /* mostra hambúrguer */
   .contact-wrap{ grid-template-columns:1fr; gap:2.2rem; }
   .hero{ padding-top:6rem; }
+
+   /* DEPOIMENTOS: no celular as setas somem (desliza com o dedo,
+     que é o gesto natural) e o card fica um pouco menor */
+  .depo-seta{ display:none; }
+  .depo-slide{ flex-basis:210px; }
  
   /* PORTFÓLIO: no celular, texto em cima e link embaixo (empilhados),
      em vez de disputarem a mesma linha */
