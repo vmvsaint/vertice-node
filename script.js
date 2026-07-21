@@ -307,7 +307,52 @@ form.addEventListener('submit', (evento) => {
   form.reset();
 });
 
-/* ---------- 6. (OPCIONAL) SALVAR OS CONTATOS NO SUPABASE ----------
+/* ---------- 6. DEPOIMENTOS: setas do carrossel + lightbox ---------- */
+/* Tudo aqui é "defensivo": se a seção não existir na página,
+   nada quebra (os ifs cuidam disso). */
+const depoSlider = document.getElementById('depoSlider');
+const depoAnt = document.getElementById('depoAnt');
+const depoProx = document.getElementById('depoProx');
+ 
+if (depoSlider && depoAnt && depoProx) {
+  // rola exatamente 1 card (largura do card + o gap de 1rem)
+  function passoDoSlider() {
+    const card = depoSlider.querySelector('.depo-slide');
+    return card ? card.offsetWidth + 16 : 260;
+  }
+  depoAnt.addEventListener('click', () => depoSlider.scrollBy({ left: -passoDoSlider(), behavior: 'smooth' }));
+  depoProx.addEventListener('click', () => depoSlider.scrollBy({ left: passoDoSlider(), behavior: 'smooth' }));
+}
+ 
+/* Lightbox: clicar num print amplia; clicar fora (ou no ✕, ou Esc) fecha */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxFechar = document.getElementById('lightboxFechar');
+ 
+if (lightbox && depoSlider) {
+  // abre ao clicar em qualquer IMAGEM do carrossel (placeholders não abrem)
+  depoSlider.addEventListener('click', (e) => {
+    const img = e.target.closest('.depo-slide img');
+    if (!img) return;
+    lightboxImg.src = img.src;
+    lightbox.classList.add('aberto');
+    lightbox.setAttribute('aria-hidden', 'false');
+  });
+ 
+  function fecharLightbox() {
+    lightbox.classList.remove('aberto');
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+  lightboxFechar.addEventListener('click', fecharLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) fecharLightbox(); // clicou no fundo escuro
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fecharLightbox();
+  });
+}
+
+/* ---------- 7. (OPCIONAL) SALVAR OS CONTATOS NO SUPABASE ----------
    Quando você criar seu projeto no Supabase (o passo a passo está
    no arquivo GUIA-DO-INICIANTE.txt), descomente o código abaixo e
    cole-o DENTRO do evento de submit, no lugar marcado com >>> <<<.
