@@ -229,6 +229,69 @@
     </div>
   </section>
 
+  <!-- ===================== DEPOIMENTOS ===================== -->
+<section class="section container" id="depoimentos">
+  <div class="section-head">
+    <span class="eyebrow">Depoimentos</span>
+    <h2>Quem contratou, <span class="grad-text">recomenda</span></h2>
+    <p>Avaliações reais de clientes atendidos. Clique em um depoimento para ampliar.</p>
+  </div>
+ 
+  <div class="depo-wrap">
+    <button class="depo-seta depo-ant" id="depoAnt" aria-label="Depoimento anterior">←</button>
+    <button class="depo-seta depo-prox" id="depoProx" aria-label="Próximo depoimento">→</button>
+ 
+    <div class="depo-slider" id="depoSlider" tabindex="0" aria-label="Carrossel de depoimentos">
+      <!-- Para cada print, um bloco <figure> como este: -->
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-01.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-02.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-03.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-04.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-05.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-06.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-07.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-08.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <figure class="depo-slide">
+        <img src="depoimentos/depo-09.png"
+             alt="Depoimento de cliente no Google" loading="lazy" />
+      </figure>
+      <!-- Copie e cole mais <figure> para mais depoimentos.
+           O carrossel aceita quantos você quiser. -->
+    </div>
+    <p class="depo-dica">← arraste para ver mais depoimentos →</p>
+  </div>
+</section>
+ 
+<!-- Lightbox (cole logo DEPOIS da seção acima) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Depoimento ampliado" aria-hidden="true">
+  <button class="lightbox-fechar" id="lightboxFechar" aria-label="Fechar">✕</button>
+  <img id="lightboxImg" src="" alt="Depoimento ampliado" />
+</div>
+
   <!-- ===================== RESULTADOS ===================== -->
   <!-- ⚠️ ESPAÇO RESERVADO PARA VOCÊ PREENCHER DEPOIS ⚠️
        Quando tiver os números reais das campanhas de tráfego:
