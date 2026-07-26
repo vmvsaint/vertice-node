@@ -268,89 +268,86 @@ if ('IntersectionObserver' in window) {
 /* Estratégia: sem servidor nenhum, o formulário monta a mensagem
    e abre o WhatsApp da agência com tudo preenchido. Simples e
    funciona em qualquer hospedagem (Vercel, GitHub Pages etc).
-
+ 
    📞 IMPORTANTE: troque o número abaixo pelo TELEFONE 1 real
    no formato 55 + DDD + número (sem espaços nem símbolos). */
 const NUMERO_WHATSAPP = '5521968193801';
-
+ 
+/* 🗄️ CONFIGURAÇÃO DO SUPABASE
+   Preencha SUPABASE_KEY para que cada lead também seja salvo no
+   banco de dados. Deixando vazio (''), a integração fica desligada
+   e o formulário continua funcionando normalmente com o WhatsApp.
+ 
+   Onde achar: painel do Supabase → Settings → API Keys
+     · SUPABASE_URL = Project URL (já preenchida abaixo)
+     · SUPABASE_KEY = Publishable key (começa com sb_publishable_)
+ 
+   ⚠️ NUNCA use aqui a Secret key (sb_secret_) nem a service_role:
+   elas ignoram o RLS e dariam acesso total ao banco a qualquer um. */
+const SUPABASE_URL = 'https://azjkouryltifbmqsdthn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_4IVMN4xPQZ6fU-9DG5DTbQ_U7P4kKhG'; // 👈 COLE AQUI A SUA PUBLISHABLE KEY
+ 
+/* Envia o lead para a tabela "leads" do Supabase.
+   Não usamos await de propósito: o envio acontece em segundo plano
+   enquanto o WhatsApp abre. Se esperássemos a resposta, o navegador
+   bloquearia a janela do WhatsApp (pop-up sem clique direto). */
+function salvarLeadNoSupabase(lead) {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.warn('Supabase desligado (falta a chave). O lead foi só para o WhatsApp.');
+    return;
+  }
+ 
+  fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+    },
+    body: JSON.stringify(lead),
+  })
+    .then((resposta) => {
+      if (resposta.ok) console.log('Lead salvo no Supabase ✅');
+      else console.error('Supabase recusou o lead. HTTP', resposta.status);
+    })
+    .catch((erro) => console.error('Falha de rede ao salvar o lead:', erro));
+}
+ 
 const form = document.getElementById('leadForm');
 const formMsg = document.getElementById('formMsg');
-
+ 
 form.addEventListener('submit', (evento) => {
   evento.preventDefault(); // impede a página de recarregar
-
+ 
   const nome = document.getElementById('f-nome').value.trim();
   const zap = document.getElementById('f-zap').value.trim();
   const servico = document.getElementById('f-servico').value;
   const mensagem = document.getElementById('f-msg').value.trim();
-
+ 
   // validação simples
   if (!nome || !zap || !servico) {
     formMsg.style.color = '#F87171';
     formMsg.textContent = 'Preencha nome, WhatsApp e o serviço desejado. 🙂';
     return;
   }
-
+ 
   // monta o texto que chega no WhatsApp da agência
   const texto =
-    `Olá! Vim pelo site da Vértice Digital.%0A%0A` + // %0A = quebra de linha
+    `Olá! Vim pelo site da Vértice Node.%0A%0A` + // %0A = quebra de linha
     `*Nome:* ${encodeURIComponent(nome)}%0A` +
     `*WhatsApp:* ${encodeURIComponent(zap)}%0A` +
     `*Serviço:* ${encodeURIComponent(servico)}%0A` +
     `*Projeto:* ${encodeURIComponent(mensagem || 'não informado')}`;
-
-  // >>> AQUI é onde a integração com o Supabase entraria (ver bloco 6) <<<
-
+ 
+  // 1) guarda o lead no banco (em segundo plano)
+  salvarLeadNoSupabase({ nome, whatsapp: zap, servico, mensagem });
+ 
+  // 2) abre o WhatsApp imediatamente (precisa ser no clique do usuário)
   formMsg.style.color = '#34D399';
   formMsg.textContent = 'Abrindo seu WhatsApp... ✅';
   window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${texto}`, '_blank');
   form.reset();
 });
-
-/* ---------- 6. DEPOIMENTOS: setas do carrossel + lightbox ---------- */
-/* Tudo aqui é "defensivo": se a seção não existir na página,
-   nada quebra (os ifs cuidam disso). */
-const depoSlider = document.getElementById('depoSlider');
-const depoAnt = document.getElementById('depoAnt');
-const depoProx = document.getElementById('depoProx');
- 
-if (depoSlider && depoAnt && depoProx) {
-  // rola exatamente 1 card (largura do card + o gap de 1rem)
-  function passoDoSlider() {
-    const card = depoSlider.querySelector('.depo-slide');
-    return card ? card.offsetWidth + 16 : 260;
-  }
-  depoAnt.addEventListener('click', () => depoSlider.scrollBy({ left: -passoDoSlider(), behavior: 'smooth' }));
-  depoProx.addEventListener('click', () => depoSlider.scrollBy({ left: passoDoSlider(), behavior: 'smooth' }));
-}
- 
-/* Lightbox: clicar num print amplia; clicar fora (ou no ✕, ou Esc) fecha */
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lightboxFechar = document.getElementById('lightboxFechar');
- 
-if (lightbox && depoSlider) {
-  // abre ao clicar em qualquer IMAGEM do carrossel (placeholders não abrem)
-  depoSlider.addEventListener('click', (e) => {
-    const img = e.target.closest('.depo-slide img');
-    if (!img) return;
-    lightboxImg.src = img.src;
-    lightbox.classList.add('aberto');
-    lightbox.setAttribute('aria-hidden', 'false');
-  });
- 
-  function fecharLightbox() {
-    lightbox.classList.remove('aberto');
-    lightbox.setAttribute('aria-hidden', 'true');
-  }
-  lightboxFechar.addEventListener('click', fecharLightbox);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) fecharLightbox(); // clicou no fundo escuro
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') fecharLightbox();
-  });
-}
 
 /* ---------- 7. (OPCIONAL) SALVAR OS CONTATOS NO SUPABASE ----------
    Quando você criar seu projeto no Supabase (o passo a passo está
