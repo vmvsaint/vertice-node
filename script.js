@@ -374,8 +374,8 @@ if (lightbox && depoSlider) {
    Depois descomente e preencha com a URL e a chave "anon" do SEU projeto
    (Configurações → API dentro do painel do Supabase):
 
-   const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-   const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI';
+   const SUPABASE_URL = 'https://azjkouryltifbmqsdthn.supabase.co';
+   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6amtvdXJ5bHRpZmJtcXNkdGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5Mzg2MjIsImV4cCI6MjEwMDUxNDYyMn0.kp5sQrgK0AuyhDDLMnE_jnQ3ZdBjyggdCEbBJoU52qI';
 
    fetch(`${SUPABASE_URL}/rest/v1/leads`, {
      method: 'POST',
