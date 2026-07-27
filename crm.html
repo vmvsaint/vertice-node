@@ -43,7 +43,10 @@
     .crm-shot-bar span:nth-child(1){ background:#F87171; }
     .crm-shot-bar span:nth-child(2){ background:#FBBF24; }
     .crm-shot-bar span:nth-child(3){ background:#34D399; }
-    .crm-shot-frame img{ width:100%; display:block; }
+    /* O styles.css do site tem uma regra global "img,svg{ height:46px }"
+       (pensada para logos pequenos). Sem esta linha, os screenshots
+       ficariam espremidos em 46px de altura — por isso o override aqui. */
+    .crm-shot-frame img{ width:100%; height:auto; display:block; }
 
     /* ---------- Grid de recursos com screenshot ---------- */
     .crm-feature-grid{
@@ -51,7 +54,7 @@
       gap:1.1rem;
     }
     .crm-feature{ display:flex; flex-direction:column; overflow:hidden; }
-    .crm-feature img{ width:100%; display:block; border-bottom:1px solid var(--line); }
+    .crm-feature img{ width:100%; height:auto; display:block; border-bottom:1px solid var(--line); }
     .crm-feature .card-inner{ height:auto; padding:1.5rem; }
     .crm-feature h3{ font-size:1.1rem; font-weight:600; letter-spacing:-.01em; }
     .crm-feature p{ color:var(--muted); font-size:.92rem; margin-top:.5rem; }
