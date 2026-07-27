@@ -343,8 +343,7 @@ form.addEventListener('submit', (evento) => {
   salvarLeadNoSupabase({ nome, whatsapp: zap, servico, mensagem });
  
   // 2) abre o WhatsApp imediatamente (precisa ser no clique do usuário)
-  formMsg.style.color = '#34D399';
-  formMsg.textContent = 'Abrindo seu WhatsApp... ✅';
+  
   window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${texto}`, '_blank');
   form.reset();
 });
