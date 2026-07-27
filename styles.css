@@ -161,8 +161,8 @@ body{
 }
 .nav-logo{ display:flex; align-items:center; gap:.6rem; font-weight:600; font-size:1.1rem; letter-spacing:-.02em; }
 .nav-logo svg{ width:30px; height:30px; }
-.nav-links{ display:flex; gap:1.8rem; font-size:.9rem; color:var(--muted); }
-.nav-links a{ transition:color .4s var(--ease); }
+.nav-links{ display:flex; gap:1.4rem; font-size:.9rem; color:var(--muted); }
+.nav-links a{ white-space:nowrap; transition:color .4s var(--ease); }
 .nav-links a:hover{ color:var(--ink); }
 .nav-cta{ display:inline-flex; }
 /* Hambúrguer (só aparece no celular — ver @media no fim) */
