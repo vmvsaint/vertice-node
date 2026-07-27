@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM para WhatsApp — Vértice Node | Centralize o atendimento da sua empresa</title>
+  <meta name="description" content="Conheça o CRM para WhatsApp da Vértice Node: caixa de entrada compartilhada, funil de vendas, automações e chatbot — tudo em um painel, com custo menor que a API oficial da Meta." />
+
+  <!-- Mesmas fontes do site principal (Space Grotesk / JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Reaproveita o styles.css e o script.js do site principal, para
+       ficar 100% igual em cores, fontes, botões e animações. -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="logo.svg">
+
+  <style>
+    /* =====================================================
+       Estilos exclusivos desta página (CRM). Usam as MESMAS
+       variáveis de :root definidas em styles.css, então
+       qualquer cor que você mudar lá também muda aqui.
+       ===================================================== */
+
+    /* ---------- Hero com "mockup" do painel ---------- */
+    .crm-hero{ padding-top:8.5rem; }
+    .crm-hero-grid{
+      display:grid; grid-template-columns:1.05fr .95fr; gap:3.2rem; align-items:center;
+    }
+    .crm-shot-frame{
+      border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+      background:var(--surface);
+      box-shadow:0 40px 90px -30px rgba(56,189,248,.28);
+      transition:transform .6s var(--ease);
+    }
+    .crm-shot-frame:hover{ transform:translateY(-4px); }
+    .crm-shot-bar{
+      display:flex; gap:.4rem; align-items:center;
+      padding:.7rem .9rem; background:var(--surface-2); border-bottom:1px solid var(--line);
+    }
+    .crm-shot-bar span{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.15); }
+    .crm-shot-bar span:nth-child(1){ background:#F87171; }
+    .crm-shot-bar span:nth-child(2){ background:#FBBF24; }
+    .crm-shot-bar span:nth-child(3){ background:#34D399; }
+    .crm-shot-frame img{ width:100%; display:block; }
+
+    /* ---------- Grid de recursos com screenshot ---------- */
+    .crm-feature-grid{
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+      gap:1.1rem;
+    }
+    .crm-feature{ display:flex; flex-direction:column; overflow:hidden; }
+    .crm-feature img{ width:100%; display:block; border-bottom:1px solid var(--line); }
+    .crm-feature .card-inner{ height:auto; padding:1.5rem; }
+    .crm-feature h3{ font-size:1.1rem; font-weight:600; letter-spacing:-.01em; }
+    .crm-feature p{ color:var(--muted); font-size:.92rem; margin-top:.5rem; }
+
+    /* ---------- Comparativo (API oficial x conexão alternativa) ---------- */
+    .compare-grid{
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.1rem;
+    }
+    .compare-card h3{ font-size:1.05rem; font-weight:600; display:flex; align-items:center; gap:.5rem; }
+    .compare-card ul{ margin-top:1.2rem; display:grid; gap:.7rem; }
+    .compare-card li{ font-size:.92rem; color:var(--muted); padding-left:1.5rem; position:relative; }
+    .compare-card.is-them li::before{ content:"–"; position:absolute; left:0; color:var(--muted); }
+    .compare-card.is-us li::before{ content:"✓"; position:absolute; left:0; color:var(--bit-0); font-weight:700; }
+    .compare-card.is-us{ border-color:rgba(56,189,248,.35); }
+
+    /* ---------- FAQ (accordion nativo, sem JS extra) ---------- */
+    .faq{ display:grid; gap:.8rem; max-width:760px; }
+    .faq details{
+      border:1px solid var(--line); border-radius:1rem; background:var(--surface);
+      padding:1.15rem 1.4rem; transition:border-color .4s var(--ease);
+    }
+    .faq details[open]{ border-color:rgba(56,189,248,.3); }
+    .faq summary{
+      cursor:pointer; font-weight:600; list-style:none;
+      display:flex; justify-content:space-between; align-items:center; gap:1rem;
+    }
+    .faq summary::-webkit-details-marker{ display:none; }
+    .faq summary::after{ content:"+"; font-family:var(--font-mono); color:var(--bit-0); font-size:1.3rem; line-height:1; }
+    .faq details[open] summary::after{ content:"–"; }
+    .faq p{ color:var(--muted); font-size:.92rem; margin-top:.9rem; }
+
+    /* ---------- Faixa de confiança sob o hero ---------- */
+    .crm-trust{
+      display:flex; flex-wrap:wrap; gap:1.6rem;
+      margin-top:2.6rem; font-family:var(--font-mono); font-size:.72rem;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    }
+    .crm-trust span{ display:flex; align-items:center; gap:.5rem; }
+    .crm-trust .dot2{ width:6px; height:6px; border-radius:50%; background:var(--grad); }
+
+    @media (max-width: 860px){
+      .crm-hero{ padding-top:7rem; }
+      .crm-hero-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fundo de partículas (mesmo do site principal) -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAVEGAÇÃO ===================== -->
+  <header class="nav" id="topo">
+    <a class="nav-logo" href="index.html" aria-label="Vértice Node — página inicial">
+      <img src="logo-branco.svg" alt="Vértice Node">
+    </a>
+
+    <nav class="nav-links" aria-label="Menu principal">
+      <a href="#recursos">Recursos</a>
+      <a href="#diferencial">Diferencial</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#faq">Perguntas</a>
+      <a href="index.html">Site da agência</a>
+    </nav>
+
+    <a class="btn btn-primary nav-cta" href="https://wa.me/5521968193801?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20do%20CRM%20e%20quero%20saber%20mais." target="_blank" rel="noopener">Falar no WhatsApp</a>
+
+    <button class="nav-burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu do celular">
+    <a href="#recursos">Recursos</a>
+    <a href="#diferencial">Diferencial</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#faq">Perguntas</a>
+    <a href="index.html">Site da agência</a>
+    <a href="#contato">Falar no WhatsApp</a>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero crm-hero container">
+    <div class="crm-hero-grid">
+      <div>
+        <span class="eyebrow">Produto Vértice Node · CRM para WhatsApp</span>
+        <h1>
+          Centralize o WhatsApp da sua empresa em
+          <span class="grad-text">um único painel</span>
+        </h1>
+        <p>
+          Caixa de entrada compartilhada, funil de vendas, automações e chatbot —
+          sua equipe atende junto, sem depender do celular de uma pessoa só e
+          sem perder nenhum lead no meio do caminho.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5521968193801?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20do%20CRM%20e%20quero%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener">
+            Pedir demonstração <span class="btn-ico">↗</span>
+          </a>
+          <a class="btn btn-ghost" href="#recursos">Ver recursos <span class="btn-ico">↓</span></a>
+        </div>
+        <div class="crm-trust">
+          <span><span class="dot2"></span>Painel 100% em português</span>
+          <span><span class="dot2"></span>Implantação acompanhada</span>
+          <span><span class="dot2"></span>Sem tarifa por conversa da Meta</span>
+        </div>
+      </div>
+
+      <div class="crm-shot-frame">
+        <div class="crm-shot-bar"><span></span><span></span><span></span></div>
+        <img src="imagens/crm-painel.jpg" alt="Painel do CRM Vértice Node mostrando conversas ativas, novos contatos, valor em negócios e mensagens enviadas hoje" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== O PROBLEMA ===================== -->
+  <section class="section container" id="problema">
+    <div class="section-head">
+      <span class="eyebrow">O problema</span>
+      <h2>O WhatsApp que vende hoje é o mesmo que <span class="grad-text">trava seu crescimento</span> amanhã</h2>
+      <p>Sinais de que sua empresa já passou do ponto do WhatsApp pessoal.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">📵</div>
+        <h3>Um número, um celular, uma pessoa</h3>
+        <p>Se quem cuida do WhatsApp falta ou troca de aparelho, o atendimento para junto com ela.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🕳️</div>
+        <h3>Leads que somem na conversa</h3>
+        <p>Sem funil e sem histórico organizado, é fácil esquecer de responder — e o cliente já foi para o concorrente.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🙈</div>
+        <h3>Zero visão do que está acontecendo</h3>
+        <p>Quantas conversas estão abertas? Quanto tem no funil? Sem um painel, essas respostas moram só na cabeça de alguém.</p>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== RECURSOS ===================== -->
+  <section class="section container" id="recursos">
+    <div class="section-head">
+      <span class="eyebrow">Recursos</span>
+      <h2>Tudo o que sua equipe precisa para <span class="grad-text">atender e vender</span> pelo WhatsApp</h2>
+      <p>Telas reais do sistema — é exatamente isso que sua equipe vai usar no dia a dia.</p>
+    </div>
+
+    <div class="crm-feature-grid">
+      <article class="card crm-feature"><img src="imagens/crm-painel.jpg" alt="Painel do CRM com métricas de conversas, contatos, negócios e gráfico de conversas ao longo do tempo" loading="lazy" />
+        <div class="card-inner">
+          <h3>Painel com métricas em tempo real</h3>
+          <p>Conversas ativas, novos contatos, valor em negócios abertos e volume de mensagens — tudo em uma tela, sem precisar perguntar para ninguém.</p>
+        </div>
+      </article>
+
+      <article class="card crm-feature"><img src="imagens/crm-inbox.jpg" alt="Caixa de entrada do CRM mostrando uma conversa de WhatsApp com etiquetas, dados do contato e negócio vinculado" loading="lazy" />
+        <div class="card-inner">
+          <h3>Caixa de entrada compartilhada</h3>
+          <p>Toda a equipe vê e responde as mesmas conversas, com histórico completo, etiquetas, notas internas e o negócio vinculado ao contato.</p>
+        </div>
+      </article>
+
+      <article class="card crm-feature"><img src="imagens/crm-funis.jpg" alt="Funil de vendas em formato Kanban com negócios organizados por etapa: novo lead, qualificado, proposta enviada e negociação" loading="lazy" />
+        <div class="card-inner">
+          <h3>Funil de vendas visual</h3>
+          <p>Arraste os negócios entre as etapas e acompanhe valor total, ticket médio e ganhos do mês — sem depender de planilha.</p>
+        </div>
+      </article>
+
+      <article class="card crm-feature"><img src="imagens/crm-automacoes.jpg" alt="Tela de automações do CRM com modelos prontos: mensagem de boas-vindas, fora do expediente, qualificador de leads e lembrete de follow-up" loading="lazy" />
+        <div class="card-inner">
+          <h3>Automações prontas para usar</h3>
+          <p>Boas-vindas automática, resposta fora do expediente, qualificação de leads e lembrete de follow-up — ativa em poucos cliques, sem programar nada.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="services-grid" style="margin-top:1.1rem;">
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🧩</div>
+        <h3>Fluxos com botões (chatbot)</h3>
+        <p>Construtor visual para menus, FAQ e captura de leads — o cliente interage direto pelo WhatsApp.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🤖</div>
+        <h3>Agentes de IA</h3>
+        <p>Assistente que sugere ou envia respostas automáticas com base no contexto do seu negócio, com transferência para um humano quando precisar.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">🏷️</div>
+        <h3>Contatos, etiquetas e campos</h3>
+        <p>Segmente por etiqueta, empresa ou campo personalizado — CNPJ, plano, o que o seu negócio precisar guardar.</p>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-ico">💸</div>
+        <h3>Conexão mais econômica</h3>
+        <p>Além da API oficial da Meta, o sistema também se conecta por um método alternativo, sem tarifa por conversa.</p>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== DIFERENCIAL ===================== -->
+  <section class="section container" id="diferencial">
+    <div class="section-head">
+      <span class="eyebrow">Diferencial</span>
+      <h2>Duas formas de conectar seu WhatsApp — <span class="grad-text">você escolhe</span></h2>
+      <p>A API oficial da Meta tem seu lugar, mas cobra por conversa e exige verificação de empresa. Por isso o CRM também aceita uma conexão alternativa.</p>
+    </div>
+
+    <div class="compare-grid">
+      <article class="card compare-card is-them"><div class="card-inner">
+        <h3>📄 API oficial (Meta)</h3>
+        <ul>
+          <li>Cobrança por conversa iniciada, definida pela Meta</li>
+          <li>Processo de aprovação e verificação de empresa</li>
+          <li>Ideal para grandes volumes e contas verificadas</li>
+        </ul>
+      </div></article>
+
+      <article class="card compare-card is-us"><div class="card-inner">
+        <h3>⚡ Conexão alternativa (Vértice Node)</h3>
+        <ul>
+          <li>Sem tarifa por conversa cobrada pela Meta</li>
+          <li>Ativação simples, direto com o seu número</li>
+          <li>Ideal para quem está começando ou tem volume menor</li>
+        </ul>
+      </div></article>
+    </div>
+  </section>
+
+  <!-- ===================== COMO FUNCIONA ===================== -->
+  <section class="section container" id="como-funciona">
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do primeiro contato ao CRM no ar</h2>
+      <p>Um processo simples, acompanhado do início ao fim.</p>
+    </div>
+    <div class="process">
+      <div class="step">
+        <span class="bin">[ 01 ]</span>
+        <h3>Diagnóstico rápido</h3>
+        <p>Conversa no WhatsApp para entender seu volume de atendimento, sua equipe e o que você mais precisa resolver.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 02 ]</span>
+        <h3>Configuração e importação</h3>
+        <p>Deixamos o CRM com a cara da sua marca, importamos seus contatos e montamos o funil do seu jeito.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 03 ]</span>
+        <h3>Treinamento da equipe</h3>
+        <p>Mostramos cada tela ao vivo para o seu time começar a usar no mesmo dia, sem enrolação.</p>
+      </div>
+      <div class="step">
+        <span class="bin">[ 04 ]</span>
+        <h3>Suporte contínuo</h3>
+        <p>Acompanhamos o uso, ajustamos automações e evoluímos o sistema junto com o seu negócio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section container" id="faq">
+    <div class="section-head">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2>Antes de decidir, tire suas dúvidas</h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Preciso pagar a tarifa oficial da Meta para usar o CRM?</summary>
+        <p>Não necessariamente. Além da API oficial, o sistema também se conecta por um método alternativo, sem tarifa por conversa cobrada pela Meta — ótimo para quem está começando.</p>
+      </details>
+      <details>
+        <summary>Minha equipe inteira consegue atender ao mesmo tempo?</summary>
+        <p>Sim. A caixa de entrada é compartilhada: todos os atendentes veem as mesmas conversas, podem atribuir um colega e recebem notificação quando uma conversa é direcionada para eles.</p>
+      </details>
+      <details>
+        <summary>Dá para importar os contatos que eu já tenho?</summary>
+        <p>Sim, a importação de contatos faz parte da etapa de configuração inicial, junto com a organização por etiquetas e campos personalizados.</p>
+      </details>
+      <details>
+        <summary>O sistema funciona pelo celular?</summary>
+        <p>Sim, o painel roda no navegador e se adapta a celular, tablet e computador — sem precisar instalar nada.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo leva para colocar no ar?</summary>
+        <p>Depende do tamanho da equipe e da migração de contatos, mas o processo é acompanhado do diagnóstico ao treinamento — sem deixar você sozinho na configuração.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO / CONVERSÃO ===================== -->
+  <section class="section container" id="contato">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <span class="eyebrow">Contato</span>
+        <h2>Pronto para tirar o WhatsApp da sua empresa da bagunça?</h2>
+        <p>Preencha o formulário ou chame direto no WhatsApp. Respondemos em até 24h com os próximos passos para colocar o CRM no ar.</p>
+
+        <div class="contact-list">
+          <a href="https://wa.me/5521968193801" target="_blank" rel="noopener">
+            <span class="ci">📞</span> (21) 96819-3801 · WhatsApp 1
+          </a>
+          <a href="https://wa.me/5521999144486" target="_blank" rel="noopener">
+            <span class="ci">📞</span> (21) 99914-4486 · WhatsApp 2
+          </a>
+          <a href="https://instagram.com/verticenode" target="_blank" rel="noopener">
+            <span class="ci">📷</span> @verticenode
+          </a>
+        </div>
+      </div>
+
+      <form class="form card" id="leadForm" novalidate>
+        <div class="card-inner" style="display:grid; gap:1rem;">
+          <div class="field">
+            <label for="f-nome">Seu nome</label>
+            <input id="f-nome" name="nome" type="text" placeholder="Como podemos te chamar?" required />
+          </div>
+          <div class="field">
+            <label for="f-zap">Seu WhatsApp</label>
+            <input id="f-zap" name="whatsapp" type="tel" placeholder="(DDD) 90000-0000" required />
+          </div>
+          <div class="field">
+            <label for="f-servico">O que você precisa?</label>
+            <select id="f-servico" name="servico" required>
+              <option value="" disabled selected>Escolha uma opção</option>
+              <option>Quero uma demonstração do CRM</option>
+              <option>Quero migrar meu WhatsApp para o CRM</option>
+              <option>Tenho dúvidas sobre valores</option>
+              <option>Quero uma versão personalizada para o meu nicho</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-msg">Conte um pouco do seu atendimento hoje</label>
+            <textarea id="f-msg" name="mensagem" placeholder="Ex.: hoje uso o WhatsApp pessoal e já perdi cliente por demora na resposta..."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">
+            Quero conhecer o CRM <span class="btn-ico">↗</span>
+          </button>
+          <p class="form-msg" id="formMsg" role="status"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <span>© 2026 Vértice Node · CRM para WhatsApp · Todos os direitos reservados</span>
+      <div class="socials">
+        <a href="https://wa.me/5521968193801" target="_blank" rel="noopener">📞 (21) 96819-3801</a>
+        <a href="https://wa.me/5521999144486" target="_blank" rel="noopener">📞 (21) 99914-4486</a>
+        <a href="https://instagram.com/verticenode" target="_blank" rel="noopener">📷 @verticenode</a>
+        <a href="index.html">Site da agência</a>
+      </div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/5521968193801?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20do%20CRM%20da%20V%C3%A9rtice." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <span class="wa-pulse" aria-hidden="true"></span>
+    <svg viewBox="0 0 32 32" width="30" height="30" fill="#FFFFFF" aria-hidden="true">
+      <path d="M16.04 4C9.55 4 4.28 9.27 4.28 15.76c0 2.08.54 4.1 1.58 5.89L4.2 27.8l6.33-1.62a11.7 11.7 0 0 0 5.51 1.39h.01c6.48 0 11.76-5.27 11.76-11.76 0-3.14-1.22-6.1-3.44-8.32A11.68 11.68 0 0 0 16.04 4zm0 21.58h-.01a9.77 9.77 0 0 1-4.98-1.36l-.36-.21-3.75.96 1-3.63-.24-.37a9.77 9.77 0 0 1-1.5-5.21c0-5.4 4.4-9.79 9.8-9.79 2.62 0 5.08 1.02 6.93 2.87a9.73 9.73 0 0 1 2.87 6.93c0 5.4-4.4 9.81-9.8 9.81zm5.38-7.34c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.64.07-.29-.15-1.24-.46-2.37-1.46-.87-.78-1.46-1.74-1.64-2.03-.17-.3-.02-.46.13-.6.14-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.19.05-.36-.03-.51-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.49-.66-.5l-.56-.01c-.2 0-.51.07-.78.36-.27.3-1.02 1-1.02 2.44s1.05 2.83 1.19 3.02c.15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.62.7.22 1.34.19 1.84.11.56-.08 1.75-.71 1.99-1.4.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.56-.35z"/>
+    </svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
