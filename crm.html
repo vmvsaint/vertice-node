@@ -45,8 +45,11 @@
     .crm-shot-bar span:nth-child(3){ background:#34D399; }
     /* O styles.css do site tem uma regra global "img,svg{ height:46px }"
        (pensada para logos pequenos). Sem esta linha, os screenshots
-       ficariam espremidos em 46px de altura — por isso o override aqui. */
-    .crm-shot-frame img{ width:100%; height:auto; display:block; }
+       ficariam espremidos em 46px de altura — por isso o override aqui.
+       O <video> não é afetado por aquela regra (ela só vale para
+       img/svg), mas mantemos a mesma declaração por clareza. */
+    .crm-shot-frame img,
+    .crm-shot-frame video{ width:100%; height:auto; display:block; }
 
     /* ---------- Grid de recursos com screenshot ---------- */
     .crm-feature-grid{
@@ -165,7 +168,15 @@
 
       <div class="crm-shot-frame">
         <div class="crm-shot-bar"><span></span><span></span><span></span></div>
-        <img src="imagens/crm-painel.jpg" alt="Painel do CRM Vértice Node mostrando conversas ativas, novos contatos, valor em negócios e mensagens enviadas hoje" loading="lazy" />
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          poster="imagens/crm-painel.jpg"
+          aria-label="Vídeo de demonstração do CRM Vértice Node">
+          <source src="imagens/crm-demo.mp4" type="video/mp4" />
+          Seu navegador não suporta vídeo em HTML5.
+        </video>
       </div>
     </div>
   </section>
