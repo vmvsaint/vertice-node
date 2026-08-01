@@ -127,6 +127,7 @@ body{
   display:inline-flex; align-items:center; gap:.7rem;
   padding:.85rem 1.5rem; border-radius:999px;
   font-weight:600; font-size:.95rem;
+  white-space:nowrap;
   transition:transform .5s var(--ease), box-shadow .5s var(--ease), background .5s var(--ease);
 }
 .btn:active{ transform:scale(.97); }
@@ -161,10 +162,19 @@ body{
 }
 .nav-logo{ display:flex; align-items:center; gap:.6rem; font-weight:600; font-size:1.1rem; letter-spacing:-.02em; }
 .nav-logo svg{ width:30px; height:30px; }
-.nav-links{ display:flex; gap:1.4rem; font-size:.9rem; color:var(--muted); }
-.nav-links a{ white-space:nowrap; transition:color .4s var(--ease); }
-.nav-links a:hover{ color:var(--ink); }
-.nav-cta{ display:inline-flex; }
+.nav-links{
+    display:flex; gap:1.4rem; font-size:.88rem; color:var(--muted);
+    flex:0 1 auto; min-width:0;   /* pode encolher, mas nunca vazar */
+  }
+  .nav-links a{ transition:color .4s var(--ease); white-space:nowrap; }
+  .nav-links a:hover{ color:var(--ink); }
+  /* O botão do menu é menor que os botões grandes do corpo do site
+     e NUNCA encolhe nem quebra em duas linhas (flex:none + nowrap
+     que vem do .btn). É isso que mantém a pílula do tamanho certo. */
+  .nav-cta{
+    display:inline-flex; flex:none;
+    padding:.6rem 1.1rem; font-size:.85rem;
+  }
 /* Hambúrguer (só aparece no celular — ver @media no fim) */
 .nav-burger{ display:none; width:42px; height:42px; position:relative; z-index:70; }
 .nav-burger span{
@@ -511,10 +521,16 @@ body{
 }
 
 /* ---------- 15. RESPONSIVIDADE ---------- */
+/* O menu vira hambúrguer a partir de 1080px (e não 860px) porque
+   agora são 7 links + o botão "Falar com Especialista": abaixo
+   disso eles se espremem e o botão perde o formato. */
+@media (max-width: 1080px){
+  .nav-links, .nav-cta{ display:none; }
+  .nav-burger{ display:block; }
+}
+ 
 @media (max-width: 860px){
   .section{ padding-block:4.5rem; }
-  .nav-links, .nav-cta{ display:none; }   /* esconde menu de desktop */
-  .nav-burger{ display:block; }           /* mostra hambúrguer */
   .contact-wrap{ grid-template-columns:1fr; gap:2.2rem; }
   .hero{ padding-top:6rem; }
 
